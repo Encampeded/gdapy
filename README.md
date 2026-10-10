@@ -42,6 +42,7 @@ retray = client.levels.download_level(results.levels[0].level_id)
 - Use GDTuple for lists of set numbers of values (ex RGB values)
 - Support setting a timezone for datetime.fromtimestamp
 - Should objects.py use tuples instead of lists?
+- Parse artist_links for Song objects
 
 **For the Future:**
 - asyncio support; pretty important, but i really want to make it optional in some way...

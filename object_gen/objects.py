@@ -27,7 +27,9 @@ OBJECTS: dict[str, dict[str, list[int]]] = {
     },
 
     "Song": {
-        "LevelSong": [1, 2, 3, 4, 5, 6, 7, 8, 10, -11, -12, 16, -18]
+        "LevelSong": [1, 2, 3, 4, 5, 6, 7, 8, 10, -11, -12, 16, -18],
+        "DownloadSong": [1, 2, 3, 4, 5, 6, 7, 8, 10, 16, -18],
+        "TopArtist": [3, 4, -7, -18]
     },
 
     "Level": {

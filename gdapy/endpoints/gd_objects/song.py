@@ -10,6 +10,15 @@ from .gd_object import GDObject
 class Song(GDObject):
     object_type = "Song"
 
+@define
+class TopArtist(Song):
+    ## BEGIN AUTO GENERATED FIELDS
+    artist_id: int
+    artist_name: str
+    youtube_url: str | None = None
+    artist_links: str | None = None
+    ## END AUTO GENERATED FIELDS
+
 
 @define
 class LevelSong(Song):
@@ -29,6 +38,21 @@ class LevelSong(Song):
     artist_links: str | None = None
     ## END AUTO GENERATED FIELDS
 
+@define
+class DownloadSong(Song):
+    ## BEGIN AUTO GENERATED FIELDS
+    id: int
+    name: str
+    artist_id: int
+    artist_name: str
+    size: float
+    video_id: str
+    youtube_url: str
+    is_verified: bool
+    link: str
+    download_soundtrack_override: str
+    artist_links: str | None = None
+    ## END AUTO GENERATED FIELDS
 
 # class Song(GDObject):
 #     song_id: int = field(alias="ID")
