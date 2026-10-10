@@ -68,8 +68,8 @@ class Level(GDObject):
 @define
 class SearchLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    level_id: int
-    level_name: str
+    id: int = field(alias="levelID")
+    name: str = field(alias="levelID")
     description: B64String
     version: int
     user_id: int
@@ -101,8 +101,8 @@ class SearchLevel(Level):
 @define
 class DownloadLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    level_id: int
-    level_name: str
+    id: int = field(alias="levelID")
+    name: str = field(alias="levelID")
     description: B64String
     level_string: str = field(repr=lambda s: s[:64] + '...' if len(s) > 64 else s)
     version: int

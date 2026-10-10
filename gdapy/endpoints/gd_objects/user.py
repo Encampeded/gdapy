@@ -59,11 +59,11 @@ class FriendRequestState(IntEnum):
 
 
 # TODO: Should this go in enums.py? Other endpoints might use a similar enum
-class ModLevel(IntEnum):
-    NONE = 0
-    MOD = 1
-    ELDER_MOD = 2
-    LEADERBOARD_MOD = 3
+class ModLevel(StrEnum):
+    NONE = "0"
+    MOD = "1"
+    ELDER_MOD = "2"
+    LEADERBOARD_MOD = "3"
 
 
 @define

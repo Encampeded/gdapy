@@ -26,11 +26,26 @@ def bool_hook(value: Any, t: Any) -> bool:
     raise TypeError(f'Got unknown boolean value! "{value}"')
 
 
-@gd_converter.register_structure_hook
-def gd_list_hook(value: str, t: list) -> list:
-    list_type = args[0] if (args := get_args(t)) else str
+@gd_converter.register_unstructure_hook
+def bool_unstructure_hook(value: bool) -> int:
+    return int(value)
+
+
+@gd_converter.register_unstructure_hook
+def gd_list_unstructure_hook(value: list) -> str:
+    return ",".join(value)
+
+
+def gd_list_structure_hook(value: str, t: type) -> list:
+    args = get_args(t)
+    list_type = args[0] if args else str
 
     return [list_type(e) for e in value.split(",")]
+
+
+gd_converter.register_structure_hook_func(
+    check_func=lambda t: get_origin(t) is list, func=gd_list_structure_hook
+)
 
 
 @gd_converter.register_structure_hook

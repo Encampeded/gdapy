@@ -27,12 +27,12 @@ retray = client.levels.download_level(results.levels[0].level_id)
   - Implement levels.get_level_scores when done with users endpoints
 
 **Features to Impement:**
-- Reimplement SearchFilters
 - Unify KEYs, and (maybe?) make dictionary keys ints instead of strings
 - Logging:
   - warn on unknown keys (name UNKNOWNKEY_32) instead of raising an error
   - warn on extra fields
 - Would be nice if properties could be included in gd_objects repr
+- Could we add an OfficialSong enum?
 
 **General Chores:**
 - Standardize imports and __init__.py

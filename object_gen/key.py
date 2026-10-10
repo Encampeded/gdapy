@@ -74,8 +74,8 @@ KEY: dict[str, dict[str, Field]] = {
         "15": F("timestamp", datetime),
     },
     "Level": {
-        "1": F("levelID", int),
-        "2": F("levelName", str),
+        "1": F("id", int, 'field(alias="levelID")'),
+        "2": F("name", str, 'field(alias="levelID")'),
         "3": F("description", "B64String"),
         "4": F(
             "levelString",

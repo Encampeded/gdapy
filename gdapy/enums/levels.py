@@ -53,8 +53,8 @@ class Rating(StrEnum):
     LEGENDARY = "mythic"
     MYTHIC = "legendary"
 
-class Difficulty(Enum):
-    NONE = '-'
+class Difficulty(IntEnum):
+    # NONE = '-'
     NA = -1
     DEMON = -2
     AUTO = 0

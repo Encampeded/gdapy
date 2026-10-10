@@ -150,19 +150,19 @@ class LevelsEndpoints:
         query: str | int = "",
         page: int = 0,
         filters: SearchFilters | None = None,
-        gdw: Literal[True] | None = None,
+        gdw: bool = False,
         raw_params: dict | None = None,
     ) -> GetLevelsResponse:
 
-        parameters: dict[str, int | str] = {}  # filters.validate() if filters else {}
+        parameters: dict[str, str | int] = {}
+
         parameters["type"] = search_type.value
         parameters["str"] = query
         parameters["page"] = page
 
-        if filters is not None:
-            # parameters.update(filters.validate())
-            pass
-        if gdw is not None:
+        parameters |= filters.to_dict() if filters is not None else {}
+
+        if gdw:
             parameters["gdw"] = 1
         if raw_params is not None:
             parameters.update(raw_params)

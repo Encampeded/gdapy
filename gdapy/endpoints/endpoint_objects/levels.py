@@ -1,7 +1,9 @@
 from attrs import define, field
+from cattrs.gen import make_dict_unstructure_fn
 
 from ...enums.levels import DemonDifficulty, Difficulty, Length, Rating
 from ...KEY import KEY
+from ..gd_objects.gd_converter import gd_converter
 from ..gd_objects.level import DownloadLevel, SearchLevel
 from ..gd_objects.song import LevelSong
 from ..gd_objects.user import TinyUser
@@ -49,81 +51,57 @@ class GetLevelsResponse:
 
 @define
 class SearchFilters:
-    pass
-    # # difficulty: GDList[Difficulty] | None = field(default=None, name="diff")
-    # demon_difficulty: DemonDifficulty | None = field(default=None, name="demonFilter")
-    # # length: GDList[Length] | None = field(default=None, name="len")
 
-    # only_uncompleted: bool | None = field(default=None, name="uncompleted")
-    # only_completed: bool | None = field(default=None, name="onlycompleted")
-    # # completed_levels: GDList[int] | None = field(default=None, name="completedLevels")
+    difficulties: list[Difficulty] = field(factory=list, alias="diff")
+    demon_difficulty: DemonDifficulty | None = field(default=None, alias="demonFilter")
 
-    # is_original: bool | None = field(default=None, name="original")
-    # is_two_player: bool | None = field(default=None, name="twoPlayer")
-    # has_coins: bool | None = field(default=None, name="coins")
+    lengths: list[Length] = field(factory=list, alias="len")
+    is_rated: bool = field(default=False, alias="star")
 
-    # # So I was trying this, and found it doesn't work
-    # # is_rated will return mythic levels, not just star rated levels.
-    # # EXCEPT that's just how to server works. The in-game filters
-    # # do the same thing. I'm glad it's the servers that are broken
-    # # and not my code lol.
-    # rating: Rating | None = None
-    # # is_unrated: bool | None = field(default=None, name="noStar")
-    # # is_rated: bool | None = field(default=None, name="star")
-    # # is_featured: bool | None = field(default=None, name="featured")
-    # # is_epic: bool | None = field(default=None, name="epic")
-    # # is_legendary: bool | None = field(default=None, name="mythic")
-    # # is_mythic: bool | None = field(default=None, name="legendary")
+    # Following are in the "Advanced Options" menu in the client
 
-    # song_id: int | None = field(default=None, name="song")
-    # uses_custom_song: bool | None = field(default=None, name="customSong")
+    only_uncompleted: bool = field(default=False, alias="uncompleted")
+    only_completed: bool = field(default=False, alias="onlycompleted")
+    completed_levels: list[int] = field(factory=list, alias="completedLevels")
+    # completed_levels is a comma seperated list of your completed levels for the above filters
+    # I wonder if we could auto generate them if logged in...
 
-    # validate_filters: bool = True
+    is_original: bool = field(default=False, alias="original")
+    has_coins: bool = field(default=False, alias="coins")
+    is_two_player: bool = field(default=False, alias="twoPlayer")
 
-    # def to_dict(self):
-    #     return {f: getattr(self, f) for f in self.__struct_fields__}
+    song_id: int | None = field(default=None, alias="song")
+    uses_custom_song: bool = field(default=False, alias="customSong")
 
-    # def validate(self) -> dict:
+    # is_rated isn't for only star_rated levels; that filter just doesn't exist lmao
+    is_unrated: bool = field(default=False, alias="noStar")
+    is_featured: bool = field(default=False, alias="featured")
+    is_epic: bool = field(default=False, alias="epic")
+    is_legendary: bool = field(default=False, alias="mythic")
+    is_mythic: bool = field(default=False, alias="legendary")
 
-    #     # if self.demon_difficulty:
-    #     #     self.difficulty = GDList()
-    #     #     self.difficulty.append(Difficulty.DEMON)
 
-    #     # It seems like the gd servers just rolls with stuff like this but eh
-    #     if self.validate_filters:
+    validate_filters: bool = True
 
-    #         # if self.completed_levels is not None and not (self.only_completed or self.only_uncompleted):
-    #         #     raise msgspec.ValidationError("Completed levels present when not searching for completed/completed!")
+    def to_dict(self):
+        if self.validate_filters:
+            self.validate()
 
-    #         if self.only_completed and self.only_uncompleted:
-    #             raise msgspec.ValidationError("TODO FIXME WRITEME")
+        return gd_converter.unstructure(self)
 
-    #         # If we're using an official song, that actually isn't a valid official song ID.
-    #         if (not self.uses_custom_song and
-    #             self.song_id is not None and
-    #             self.song_id not in KEY["officialSong"]):
-    #             raise msgspec.ValidationError(f"Invalid officialSong ID: {self.song_id}")
+    def validate(self):
 
-    #         # If we say we're using a custom song, but we don't have a song_id
-    #         if self.uses_custom_song and self.song_id is None:
-    #             raise msgspec.ValidationError("TODO FIXME WRITEME")
+        exclusive_difficulties = [
+            d for d in self.difficulties if d < 0
+        ]
 
-    #     # Encode w/ msgspec
-    #     encoded_filters = msgspec.to_builtins(
-    #         self,
-    #         enc_hook=enc_hook
-    #     )
+        if not len(exclusive_difficulties) < 2:
+            raise ValueError("Difficulties contain more than one exclusive value (N/A, Demon, and Auto)")
 
-    #     # Now we fix what msgspec did lol.
-    #     # This kinda sucks ngl.
-    #     encoded_filters.pop("validate_filters", None)
+        if self.uses_custom_song and not self.song_id:
+            raise ValueError()
 
-    #     if "rating" in encoded_filters:
-    #         encoded_filters[encoded_filters["rating"]] = 1
-    #         encoded_filters.pop("rating")
-
-    #     for key, value in encoded_filters.copy().items():
-    #         if isinstance(value, bool):
-    #             encoded_filters[key] = int(value)
-
-    #     return encoded_filters
+gd_converter.register_unstructure_hook(
+    SearchFilters,
+    make_dict_unstructure_fn(SearchFilters, gd_converter, _cattrs_omit_if_default=True),
+)
