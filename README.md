@@ -63,6 +63,8 @@ retray = client.levels.download_level(results.levels[0].level_id)
 
 ## Contributing
 
+Wow, I'm flattered. The following sections specify general code-stuffs for the library, mostly for my own sanity when I inevitably return to this project after a months-long break and have no idea what I'm doing, but also, I suppose, for the contributer that may or may not exist!
+
 ### Program Flow
 1. Call endpoint method
 2. Endpoint method parses arguments and calls gd_post
@@ -72,22 +74,26 @@ retray = client.levels.download_level(results.levels[0].level_id)
 
 ### Project Structure
 `gdapy/enums`
-- Contains any enums used by the user; function parameters and object attributes
+- Contains any enums used by the user; generally function parameters and object attributes
 
-`gdapy/endpoints`<br>
+`gdapy/endpoints`
 - Contains endpoint classes used by client.py
 - Should contain the implementation; the user shouldn't import anything from this folder.
 - Endpoint methods should copy the actual php endpoint names, however with "GJ" and any numbers removed, and in snake_case.
 
-`gdapy/endpoints/gd_objects`<br>
-Contains `gd_object` implementations<br>
-Objects should inherit from base `gd_object`, and if any attributes require cleanup (decoding an encoded string, second example), implement a `_clean()` method (which should call `super()._clean()` at the end!)<br>
+`gdapy/endpoints/gd_objects`
+- Contains `gd_object` implementations
+  - Objects should inherit from a base Object class (ex Song, Level, etc) `gd_object` that defines the object_type ClassVar
+    - If any attributes require cleanup (mainly just decoding a specially encoded string), implement a `_clean()` method (which should call `super()._clean()` at the end!)
+    - 
+  - Object fields are defined in `object_gen/objects.py`; **they should not be manually edited**.
+  - If you want a convenience field (ex difficulty: str, instead of difficulty denominator/numerator), implement them as a property.
 
 `gdapy/endpoints/endpoint_objects`<br>
-Contains structured objects/enums returned by endpoint methods
-
+- Contains structured response objects returned by endpoint methods
 
 ### General Style
-- Use double quotes for longer strings, and single quotes for character-like strings
+- I use ruff. Would recommend.
+- Use double quotes, save for where a string includes double quotes, in which case use single.
 - Explicit is better than Implicit; please avoid writing deeply-nesting tiny functions. A good example of this (in my opinion) would be the former gd.py library. I would much prefer readable code that repeats a bit to... that.
 - This is my first time taking on a project of this scale, so if something seems off or strange, it may not be intentional. Free free to let me know, or fix it yourself, or don't :shrug:
