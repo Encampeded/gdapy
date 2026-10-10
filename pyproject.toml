@@ -1,0 +1,10 @@
+[project]
+name = "gdapy"
+version = "0.0.1"
+description = "A simple yet powerful Geometry Dash API wrapper"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["cattrs", "pyheck"]
+
+[tool.ruff]
+exclude = ["__init__.py"]
