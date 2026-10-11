@@ -25,14 +25,9 @@ def generate_fields(object_type: str, keys: list[int]) -> str:
 
     for int_key in keys:
 
-        optional = False
+        field = KEY[object_type][str(abs(int_key))]
+
         if int_key < 0:
-            int_key *= -1
-            optional = True
-
-        field = KEY[object_type][str(int_key)]
-
-        if optional:
             field = field._replace(
                 type = field.type_to_str() + " | None",
                 default = "None"

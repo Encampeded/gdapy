@@ -154,13 +154,14 @@ class LevelsEndpoints:
         raw_params: dict | None = None,
     ) -> GetLevelsResponse:
 
-        parameters: dict[str, str | int] = {}
+        parameters: dict[str, str | int] = {
+            "type": search_type.value,
+            "str": query,
+            "page": page
+        }
 
-        parameters["type"] = search_type.value
-        parameters["str"] = query
-        parameters["page"] = page
-
-        parameters |= filters.to_dict() if filters is not None else {}
+        if filters is not None:
+            parameters |= filters.to_dict()
 
         if gdw:
             parameters["gdw"] = 1
