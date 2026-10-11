@@ -192,8 +192,8 @@ class LevelsEndpoints:
 
         hash_string = "".join(
             [
-                str(level.level_id)[0]
-                + str(level.level_id)[-1]
+                str(level.id)[0]
+                + str(level.id)[-1]
                 + str(level.stars)
                 + str(int(level.verified_coins))
                 for level in levels

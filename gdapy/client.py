@@ -8,8 +8,9 @@ from .endpoints import (
     AccountsEndpoints,
     CommentsEndpoints,
     LevelsEndpoints,
+    ListsEndpoints,
+    SongsEndpoints,
     UsersEndpoints,
-    SongsEndpoints
 )
 from .enums.misc import Platform, Secrets
 from .errors import GDServerError, NotLoggedInError
@@ -30,6 +31,7 @@ class GDClient:
         self.comments = CommentsEndpoints(self)
         self.users = UsersEndpoints(self)
         self.songs = SongsEndpoints(self)
+        self.lists = ListsEndpoints(self)
 
         self.logged_in: bool = False
 

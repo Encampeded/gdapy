@@ -13,7 +13,7 @@ gd_converter = Converter(forbid_extra_keys=True, use_alias=True)
 
 
 @gd_converter.register_structure_hook
-def bool_hook(value: Any, t: Any) -> bool:
+def bool_structure_hook(value: Any, t: Any) -> bool:
     if not isinstance(value, str):
         return value
 

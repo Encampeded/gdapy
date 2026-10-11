@@ -3,3 +3,4 @@ from .accounts import AccountsEndpoints
 from .comments import CommentsEndpoints
 from .users import UsersEndpoints
 from .songs import SongsEndpoints
+from .lists import ListsEndpoints

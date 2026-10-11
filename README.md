@@ -28,6 +28,7 @@ retray = client.levels.download_level(results.levels[0].level_id)
 
 **Features to Impement:**
 - Unify KEYs, and (maybe?) make dictionary keys ints instead of strings
+  - Or, alternatively, have generator also update KEY.py based on object_gen's key.py
 - Logging:
   - warn on unknown keys (name UNKNOWNKEY_32) instead of raising an error
   - warn on extra fields

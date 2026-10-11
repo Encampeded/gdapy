@@ -1,10 +1,11 @@
 from datetime import datetime
-from typing import Any, NamedTuple, get_args
+from typing import Any, Literal, NamedTuple, get_args
 
 from pyheck import snake
 
 
 def type_to_str_rec(t: Any) -> str:
+
     field_type = t if isinstance(t, str) else t.__name__
 
     if type_args := get_args(t):
@@ -74,8 +75,8 @@ KEY: dict[str, dict[str, Field]] = {
         "15": F("timestamp", datetime),
     },
     "Level": {
-        "1": F("id", int, 'field(alias="levelID")'),
-        "2": F("name", str, 'field(alias="levelID")'),
+        "1": F("id", int, 'field(alias="level_id")'),
+        "2": F("name", str, 'field(alias="level_name")'),
         "3": F("description", "B64String"),
         "4": F(
             "levelString",
@@ -84,6 +85,7 @@ KEY: dict[str, dict[str, Field]] = {
         ),
         "5": F("version", int),
         "6": F("userID", int),
+        "7": F("difficulty", int),
         "8": F("difficultyDenominator", int),
         "9": F("difficultyNumerator", int),
         "10": F("downloads", int),
@@ -125,9 +127,14 @@ KEY: dict[str, dict[str, Field]] = {
         "46": F("editorTime", int),
         "47": F("editorTimeCopies", int),
         "48": F("settingsString", str),
+        "49": F("accountID", int),
+        "50": F("username", str),
+        "51": F("levelIDs", list[int]),
         "52": F("songIDs", list[int]),
         "53": F("sfxIDs", list[int]),
         "54": F("songSize", int),
+        "55": F("listReward", int),
+        "56": F("listRewardRequirement", int),
         "57": F("verificationTime", int),
         "62": F("exactUploadTime", datetime),
         "63": F("exactUpdateTime", datetime),

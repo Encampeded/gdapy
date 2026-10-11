@@ -7,6 +7,7 @@ KEY = {
         '4': "levelString",
         '5': "version",
         '6': "userID",
+        '7': "difficulty", # for lists
         '8': "difficultyDenominator",
         '9': "difficultyNumerator",
         '10': "downloads",
@@ -40,9 +41,14 @@ KEY = {
         '46': "editorTime",
         '47': "editorTime",
         '48': "settingsString", # Unused
+        '49': "accountID", # for lists
+        '50': "username", # for lists
+        '51': "levelIDs", # for lists
         '52': "songIDs",
         '53': "sfxIDs",
         '54': "songSize", # Total song size. Seemingly unused; not returned by server
+        '55': "listReward", # for lists
+        '56': "listRewardRequirement", # for lists
         '57': "verificationTime", # How long the level took to verify (in frames, assume 240 FPS)
         '62': "exactUploadTime",
         '63': "exactUpdateTime"
