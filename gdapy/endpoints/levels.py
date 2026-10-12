@@ -157,7 +157,7 @@ class LevelsEndpoints:
         parameters: dict[str, str | int] = {
             "type": search_type.value,
             "str": query,
-            "page": page
+            "page": page,
         }
 
         if filters is not None:
@@ -257,7 +257,6 @@ class LevelsEndpoints:
         ]
 
         return users
-
 
     def get_map_packs(self, page: int = 0) -> Page[MapPack]:
         response = self.client.gd_post("getGJMapPacks21", {"page": page})
