@@ -30,7 +30,9 @@ class SearchList(List):
     feature_score: int | None = None
     ## END AUTO GENERATED FIELDS
 
-    # rated: bool  # TODO
+    @property
+    def rated(self) -> bool:
+        return self.feature_score is not None
 
     @property
     def difficulty_text(self) -> str:
