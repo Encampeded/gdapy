@@ -46,7 +46,9 @@ class ListsEndpoints:
         ]
 
         creators: list[TinyUser] = [
-            TinyUser.from_string(raw_user) for raw_user in raw_data[1].split('|') if raw_user
+            TinyUser.from_string(raw_user)
+            for raw_user in raw_data[1].split("|")
+            if raw_user
         ]
 
         return GetListsResponse(lists, creators, PageInfo(raw_data[2]))

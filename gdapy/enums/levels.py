@@ -1,7 +1,5 @@
-from enum import IntEnum, StrEnum, Enum
+from enum import Enum, IntEnum, StrEnum
 
-# Endpoint Enums
-# Uses by endpoints/levels.py
 
 class SearchType(IntEnum):
     SEARCH = 0
@@ -9,14 +7,14 @@ class SearchType(IntEnum):
     MOST_LIKED = 2
     TRENDING = 3
     RECENT = 4
-    USERS_LEVELS = 5 # Query is userID
+    USERS_LEVELS = 5  # Query is userID
     FEATURED = 6
     MAGIC = 7
     SENT = 8
     # LIST_OF_LEVELS = 10 # Get multiple levels. Query is CommaSeperatedIDList of IDs
     AWARDED = 11
-    FOLLOWED = 12 # See `followed` parameter
-    FRIENDS = 13 # Login Required
+    FOLLOWED = 12  # See `followed` parameter
+    FRIENDS = 13  # Login Required
     GD_WORLD_MOST_LIKED = 15
     HALL_OF_FAME = 16
     GD_WORLD_FEATURED = 17
@@ -26,24 +24,28 @@ class SearchType(IntEnum):
     WEEKLY_HISTORY = 22
     EVENT_HISTORY = 23
     # REPORTED_LEVELS = 24 # Elder mods only
-    LIST = 25 # str is listID
+    LIST = 25  # str is listID
     # LIST_OF_LEVELS_3 = 26 # same as type 19 (unknown list of levels) but can return up to 100 levels
     # SENT_2 = 27 # TODO FIXME: GDDocs just calls this Sent
     GD_LITE_WEEKLY_LEVELS = 28
     GD_LITE_BONUS_LEVELS = 29
+
 
 class DailyType(IntEnum):
     DAILY = 0
     WEEKLY = 1
     EVENT = 2
 
+
 # Parameter enums
 # Used by endpoints/endpoint_objects/levels.py
+
 
 class Unlisted(Enum):
     PUBLIC = 0
     FRIENDS_ONLY = 1
     UNLISTED = 2
+
 
 class Rating(StrEnum):
     UNRATED = "noStar"
@@ -52,6 +54,7 @@ class Rating(StrEnum):
     EPIC = "epic"
     LEGENDARY = "mythic"
     MYTHIC = "legendary"
+
 
 class Difficulty(IntEnum):
     # NONE = '-'
@@ -71,12 +74,14 @@ class Difficulty(IntEnum):
     INSANE_DEMON = 9
     EXTREME_DEMON = 10
 
+
 class DemonDifficulty(IntEnum):
     EASY = 1
     MEDIUM = 2
     HARD = 3
     INSANE = 4
     EXTREME = 5
+
 
 class Length(IntEnum):
     TINY = 0
@@ -85,6 +90,7 @@ class Length(IntEnum):
     LONG = 3
     XL = 4
     PLATFORMER = 5
+
 
 # Object enums
 # Used by endpoints/gd_objects/levels.py

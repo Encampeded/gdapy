@@ -51,7 +51,6 @@ class GetLevelsResponse:
 
 @define
 class SearchFilters:
-
     difficulties: list[Difficulty] = field(factory=list, alias="diff")
     demon_difficulty: DemonDifficulty | None = field(default=None, alias="demonFilter")
 
@@ -80,7 +79,6 @@ class SearchFilters:
     is_legendary: bool = field(default=False, alias="mythic")
     is_mythic: bool = field(default=False, alias="legendary")
 
-
     validate_filters: bool = True
 
     def to_dict(self):
@@ -91,15 +89,16 @@ class SearchFilters:
 
     def validate(self):
 
-        exclusive_difficulties = [
-            d for d in self.difficulties if d < 0
-        ]
+        exclusive_difficulties = [d for d in self.difficulties if d < 0]
 
         if not len(exclusive_difficulties) < 2:
-            raise ValueError("Difficulties contain more than one exclusive value (N/A, Demon, and Auto)")
+            raise ValueError(
+                "Difficulties contain more than one exclusive value (N/A, Demon, and Auto)"
+            )
 
         if self.uses_custom_song and not self.song_id:
             raise ValueError()
+
 
 gd_converter.register_unstructure_hook(
     SearchFilters,

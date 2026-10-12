@@ -1,7 +1,10 @@
+from enum import Enum
+
 from attrs import define, field
+
 from ..gd_objects.level import BeatenLevel
 from ..gd_objects.map_pack import BeatenMapPack
-from enum import Enum
+
 
 @define
 class SyncAccountResponse:
@@ -28,17 +31,18 @@ class SyncAccountResponse:
         repr = "SyncAccountResponse("
 
         def truncate_str(string: str, maxlen: int = 64) -> str:
-            return string[:maxlen] + '...' if len(string) > maxlen else string
+            return string[:maxlen] + "..." if len(string) > maxlen else string
 
         # FIXME: atp i should just write some nice repr helpers for objects that need them
         repr += "save_CCGameManager='" + truncate_str(self.save_CCGameManager) + "', "
         repr += "save_CCLocalLevels=" + truncate_str(self.save_CCLocalLevels) + "', "
-        repr += "game_version=" + str(self.game_version) + ', '
-        repr += "binary_version=" + str(self.binary_version) + ', '
-        repr += "levels=" + self.levels[:16].__repr__() + ', '
-        repr += "map_packs=" + self.map_packs[:16].__repr__() + ', '
+        repr += "game_version=" + str(self.game_version) + ", "
+        repr += "binary_version=" + str(self.binary_version) + ", "
+        repr += "levels=" + self.levels[:16].__repr__() + ", "
+        repr += "map_packs=" + self.map_packs[:16].__repr__() + ", "
 
         return repr
+
 
 @define
 class AccountSettings:
@@ -57,11 +61,11 @@ class AccountSettings:
         custom (str, optional): The user's custom one-time authentication token.
     """
 
-    messages: int | None = field(default = None, alias="mS")
-    friend_requests: int | None = field(default = None, alias="frS")
-    comments: int | None = field(default = None, alias="cS")
+    messages: int | None = field(default=None, alias="mS")
+    friend_requests: int | None = field(default=None, alias="frS")
+    comments: int | None = field(default=None, alias="cS")
 
-    youtube: str | None = field(default = None, alias="yt")
+    youtube: str | None = field(default=None, alias="yt")
     twitter: str | None = None
     twitch: str | None = None
     instagram: str | None = None

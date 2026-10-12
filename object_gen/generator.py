@@ -1,8 +1,8 @@
-import re
 import os
-from objects import OBJECTS
+import re
+
 from key import KEY
-from pyheck import snake
+from objects import OBJECTS
 
 DIRECTORY = "/".join(__file__.split("/")[:-2]) + "/gdapy/endpoints/gd_objects"
 
@@ -14,8 +14,11 @@ DIRECTORY = "/".join(__file__.split("/")[:-2]) + "/gdapy/endpoints/gd_objects"
 RE_OBJECT_TYPE = r"object_type = \"(.*?)\""
 
 FIELDS_BEGIN = "    ## BEGIN AUTO GENERATED FIELDS"
-FIELDS_END   = "    ## END AUTO GENERATED FIELDS"
-RE_CLASS = rf"(?s)class ([a-zA-Z]+)\(([a-zA-Z,=_\s]*)\):\n+{FIELDS_BEGIN}\n(.*?){FIELDS_END}"
+FIELDS_END = "    ## END AUTO GENERATED FIELDS"
+RE_CLASS = (
+    rf"(?s)class ([a-zA-Z]+)\(([a-zA-Z,=_\s]*)\):\n+{FIELDS_BEGIN}\n(.*?){FIELDS_END}"
+)
+
 
 def generate_fields(object_type: str, keys: list[int]) -> str:
     fields: str = ""
@@ -24,14 +27,10 @@ def generate_fields(object_type: str, keys: list[int]) -> str:
     # print(keys)
 
     for int_key in keys:
-
         field = KEY[object_type][str(abs(int_key))]
 
         if int_key < 0:
-            field = field._replace(
-                type = field.type_to_str() + " | None",
-                default = "None"
-            )
+            field = field._replace(type=field.type_to_str() + " | None", default="None")
 
         fields += field.to_line()
 
@@ -47,7 +46,7 @@ for object_filename in os.listdir(DIRECTORY):
 
     object_path = os.path.join(DIRECTORY, object_filename)
 
-    with open(object_path, 'r') as f:
+    with open(object_path, "r") as f:
         file = f.read()
 
     # classes: Iterator[re.Match] = re.finditer(RE_CLASS, file)
@@ -75,7 +74,6 @@ for object_filename in os.listdir(DIRECTORY):
             print(f"            Missing fields for {object_name}! Skipping...")
             return full_match
 
-
         new_fields = generate_fields(object_type, OBJECTS[object_type][object_name])
 
         # Remove fields that would be inherited from parent class. Doesn't seem entirely necessary
@@ -91,12 +89,16 @@ for object_filename in os.listdir(DIRECTORY):
 
         # Reconstruct the match with the specific group replaced
         # print(full_match[:start - match_start] + new_fields + full_match[end - match_start:])
-        return full_match[:start - match_start] + new_fields + full_match[end - match_start:]
+        return (
+            full_match[: start - match_start]
+            + new_fields
+            + full_match[end - match_start :]
+        )
 
     file = re.sub(RE_CLASS, rewrite_fields, file)
 
     print("    Writing", object_filename)
-    with open(object_path, 'w') as f:
+    with open(object_path, "w") as f:
         f.write(file)
     print("    Done!")
 

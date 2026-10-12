@@ -1,6 +1,8 @@
-from ..gd_objects.comment import AccountComment, LevelComment, LevelHistoryComment
-from ..gd_objects.page import PageInfo
 from attrs import define
+
+from ..gd_objects.comment import AccountComment, LevelComment, LevelHistoryComment
+from .page import PageInfo
+
 
 @define
 class CommentPage:

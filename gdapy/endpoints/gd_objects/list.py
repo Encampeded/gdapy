@@ -1,14 +1,12 @@
-from typing import Literal
-
 from attrs import define, field
 
-from ...enums.levels import Difficulty
 from .gd_object import GDObject
 from .gd_types import B64String
 
 
 class List(GDObject):
     object_type = "Level"
+
 
 @define
 class SearchList(List):
@@ -47,8 +45,3 @@ class SearchList(List):
                 return "Normal"
             case _:
                 return ""
-
-
-"""
-
-"""

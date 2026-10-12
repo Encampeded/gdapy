@@ -1,9 +1,5 @@
-from itertools import batched
-from urllib.parse import unquote
+from attrs import define
 
-from attrs import define, field
-
-from ...enums.misc import NongEnum
 from .gd_object import GDObject
 
 
@@ -13,9 +9,10 @@ class Song(GDObject):
     @classmethod
     def _clean(cls, raw_dict: dict) -> dict:
         if raw_dict.get("extraArtistIDs", False):
-            raw_dict["extraArtistIDs"] = raw_dict["extraArtistIDs"].replace('.', ',')
+            raw_dict["extraArtistIDs"] = raw_dict["extraArtistIDs"].replace(".", ",")
 
         return super()._clean(raw_dict)
+
 
 @define
 class TopArtist(Song):
@@ -45,6 +42,7 @@ class LevelSong(Song):
     artist_links: str | None = None
     ## END AUTO GENERATED FIELDS
 
+
 @define
 class DownloadSong(Song):
     ## BEGIN AUTO GENERATED FIELDS
@@ -60,6 +58,7 @@ class DownloadSong(Song):
     download_soundtrack_override: str
     artist_links: str | None = None
     ## END AUTO GENERATED FIELDS
+
 
 # class Song(GDObject):
 #     song_id: int = field(alias="ID")

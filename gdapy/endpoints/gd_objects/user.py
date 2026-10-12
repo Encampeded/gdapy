@@ -1,7 +1,7 @@
 from ast import literal_eval
 from base64 import urlsafe_b64decode
 from enum import IntEnum, StrEnum
-from typing import Annotated, Self
+from typing import Self
 
 from attrs import define, field
 
@@ -197,6 +197,7 @@ class DownloadUser(User):
     new_friends: int | None = None
     ## END AUTO GENERATED FIELDS
 
+
 @define
 class SearchUser(User):
     ## BEGIN AUTO GENERATED FIELDS
@@ -218,6 +219,7 @@ class SearchUser(User):
     color3: int
     moons: int
     ## END AUTO GENERATED FIELDS
+
 
 @define
 class LeaderboardUser(User):
@@ -241,6 +243,7 @@ class LeaderboardUser(User):
     moons: int
     account_highlight: str | None = None
     ## END AUTO GENERATED FIELDS
+
 
 @define
 class LevelLeaderboardUser(User):
@@ -267,6 +270,7 @@ class LevelLeaderboardUser(User):
     @property
     def time(self) -> int:
         return self.stars
+
 
 @define
 class FriendRequestUser(User):
@@ -299,145 +303,3 @@ class CommentUser(User):
     account_id: int
     color3: int
     ## END AUTO GENERATED FIELDS
-
-
-
-# @define
-# class CommentUser(User):
-#     user_name: str
-#     icon_id: int
-#     color: int
-#     color2: int
-#     icon_type: Gamemode
-#     glow: bool = field(alias="special")
-#     account_id: int
-#     color3: int
-
-
-# class FriendRequestUser(User):
-#     user_name: str
-#     user_id: int
-#     icon_id: int
-#     color: int
-#     color2: int
-#     icon_type: Gamemode
-#     glow: bool = field(alias="special")
-#     account_id: int
-#     new_friend_request: bool
-#     color3: int
-
-#     friend_request_id: int
-#     friend_request_message: str
-#     friend_request_age: str
-
-
-# class LevelLeaderboardUser(User):
-#     user_name: str
-#     user_id: int
-#     stars: int
-#     ranking: int
-#     icon_id: int
-#     color: int
-#     color2: int
-#     secret_coins: int
-#     icon_type: Gamemode
-#     glow: bool = field(alias="special")
-#     account_id: int
-#     age: str
-
-
-# class GlobalLeaderboardUser(User):
-#     user_name: str
-#     user_id: int
-#     stars: int
-#     demon_count: int
-#     ranking: int
-#     icon_id: int
-#     color: int
-#     color2: int
-#     secret_coins: int
-#     icon_type: Gamemode
-#     glow: bool = field(alias="special")  # FIXME Should be bool
-#     account_id: int
-#     user_coins: int
-#     diamonds: int
-#     moons: int
-#     color3: int
-#     creator_points: int | None = None
-#     account_highlight: Annotated[int, "accountID"] | None = None
-
-
-# class SearchUser(User):
-#     user_name: str
-#     user_id: int
-#     stars: int
-#     demon_count: int
-#     ranking: int
-#     creator_points: int
-#     icon_id: int
-#     color: int
-#     color2: int
-#     secret_coins: int
-#     icon_type: Gamemode
-#     glow: bool = field(alias="special")
-#     account_id: int
-#     user_coins: int
-#     diamonds: int
-#     color3: int
-#     moons: int
-
-
-# class DownloadUser(User):
-#     user_name: str
-#     user_id: int
-#     stars: int
-#     demon_count: int
-#     creator_points: int
-#     color: int
-#     color2: int
-#     secret_coins: int
-#     account_id: int
-#     user_coins: int
-
-#     message_send_state: State = field(alias="messageState")
-#     friend_request_state: FriendRequestState = field(alias="friendsState")
-#     youtube: str = field(alias="youTube")
-#     icon: int = field(alias="accIcon")
-#     ship: int = field(alias="accShip")
-#     ball: int = field(alias="accBall")
-#     ufo: int = field(alias="accBird")
-#     wave: int = field(alias="accDart")
-#     robot: int = field(alias="accRobot")
-#     glow: bool = field(alias="accGlow")
-#     is_registered: bool
-#     global_rank: int
-#     friend_state: FriendState
-
-#     spider: int = field(alias="accSpider")
-#     twitter: str
-#     twitch: str
-#     diamonds: int
-#     explosion: int = field(alias="accExplosion")
-#     mod: ModLevel
-#     comment_history_state: State
-#     color3: int
-#     moons: int
-#     swing: int = field(alias="accSwing")
-#     jetpack: int = field(alias="accJetpack")
-
-#     # demons: Demons # TODO format this into an object?
-#     # classic_levels: ClassicLevels
-#     # platformer_levels: PlatformerLevels
-#     discord: str
-#     instagram: str
-#     tiktok: str
-#     custom: str
-
-#     friend_request_id: int | None = None
-#     friend_request_message: str | None = None
-#     friend_request_age: str | None = None
-
-#     # Only when logged in. Should I make a new variant for this?
-#     messages: int | None = None
-#     friend_requests: int | None = None
-#     new_friends: int | None = None

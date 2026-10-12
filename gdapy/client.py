@@ -2,7 +2,6 @@ from random import randint
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 from uuid import uuid4
-from zoneinfo import ZoneInfo
 
 from .endpoints import (
     AccountsEndpoints,

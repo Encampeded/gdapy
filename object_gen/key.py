@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, Literal, NamedTuple, get_args
+from typing import Any, NamedTuple, get_args
 
 from pyheck import snake
 

@@ -1,6 +1,8 @@
 from attrs import define
-from .gd_object import GDObject
+
 from ...KEY import KEY
+from .gd_object import GDObject
+
 
 @define
 class BaseMapPack(GDObject):
@@ -9,17 +11,21 @@ class BaseMapPack(GDObject):
 
     object_type = "MapPack"
 
+
 @define
 class Gauntlet(BaseMapPack):
     @property
     def gauntlet_name(self):
         return KEY["gauntletID"][str(self.pack_id)]
 
+
 @define
 class BeatenMapPack(BaseMapPack):
     """Returned by syncGJAccountNew.php"""
+
     stars: int
     coins: int
+
 
 @define
 class MapPack(BeatenMapPack):
