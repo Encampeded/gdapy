@@ -54,52 +54,6 @@ KEY = {
         '63': "exactUpdateTime"
     },
 
-    "old": {
-        '1': "levelID",
-        '2': "levelName",
-        '3': "description",
-        '4': "levelString",  # Only returned from downloadGJLevel22
-        '5': "version",
-        '6': "playerID",
-        '8': "difficultyDenominator",
-        '9': "difficultyNumerator",
-        '10': "downloads",
-        '11': "setCompletes",  # Obsolete since 2.1
-        '12': "officialSong",
-        '13': "game_version",
-        '14': "likes",
-        '15': "length",
-        '16': "dislikes",
-        '17': "demon",
-        '18': "stars",
-        '19': "feature_score",
-        '25': "auto",
-        '26': "record_string",  # Unused
-        '27': "password",
-        '28': "upload_date",  # Only returned from downloadGJLevel22
-        '29': "update_date",  # Only returned from downloadGJLevel22
-        '30': "copied_id",
-        '31': "two_player",
-        '35': "custom_song_id",
-        '36': "extra_string",  # Use unknown
-        '37': "coins",
-        '38': "verified_coins",
-        '39': "stars_requested",
-        '40': "low_detail_mode",  # Only returned from downloadGJLevel22
-        '41': "daily_number",  # Only returned from downloadGJLevel22, Daily/Weekly level requests only
-        '42': "epic",
-        '43': "demon_difficulty",
-        '44': "is_gauntlet",  # Returns if the level is in a gauntlet. Is this exclusive to a gauntlet search type?
-        '45': "objects",
-        '46': "editor_time",
-        '47': "editor_time_copies",
-        '48': "settings_string",  # Unused
-        '52': "song_ids",  # Only returned from downloadGJLevel22
-        '53': "sfx_ids",  # Only returned from downloadGJLevel22
-        '54': "song_size",  # Unknown value, perhaps RobTop-only? (corresponds to k106 in the save file)
-        '57': "verification_time",  # Only returned from downloadGJLevel22
-    },
-
     "difficulty": {
         '0': "Unrated",
         '10': "Easy",

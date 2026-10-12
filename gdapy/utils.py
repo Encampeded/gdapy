@@ -4,7 +4,7 @@ from hashlib import sha1
 from itertools import batched
 
 from .enums.misc import Salts, XORKeys
-from .KEY import KEY
+from .key import KEY
 
 
 def to_dictionary(type: str, raw_data: str, delimiter: str = ":") -> dict[str, str]:
