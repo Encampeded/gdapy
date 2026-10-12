@@ -15,9 +15,8 @@ from .enums.misc import Platform, Secrets
 from .errors import GDServerError, NotLoggedInError
 from .utils import is_integer
 
-# msgspec.convert(dict, type=Level)
 # userID and accountID
-# NOT playerID. playerID is FAKE PROPAGANDA made up by GDDocs!!!!1!1 (and colon ngl i think)
+# NOT playerID. playerID is FAKE PROPAGANDA made up by GDDocs!!!!1!1 (and colon's gd-docs ngl i think)
 # userName, not username, as "In 2.2, the userName and password fields were replaced with accountID and gjp2."
 # Robtop himself uses userName
 # downloadGJLevel:
@@ -61,7 +60,7 @@ class GDClient:
 
             case _:
                 raise NotImplementedError(
-                    "Only Android and Windows UDIDs are supported presently!"
+                    "Only Android and Windows UDIDs are presently supported!"
                 )
 
         self.common_data["udid"] = udid
@@ -69,7 +68,16 @@ class GDClient:
     def gd_post(
         self, endpoint: str, data: dict | None = None, secret: Secrets = Secrets.COMMON
     ) -> str:
-        """Makes a properly formatted post request to the gd servers using provided endpoint and data"""
+        """Makes a properly formatted post request to the gd servers using provided endpoint and data
+
+        Arguments:
+            endpoint (str): URL, or endpoint name excluding address and .php extension
+            data (dict): Request data
+            secret (Secrets)
+
+        Returns:
+            Raw string response from servers
+        """
         if data is None:
             data = {}
 

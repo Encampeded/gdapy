@@ -13,8 +13,13 @@ gd_converter = Converter(forbid_extra_keys=True, use_alias=True)
 
 @gd_converter.register_structure_hook
 def bool_structure_hook(value: Any, t: Any) -> bool:
-    if not isinstance(value, str):
+    if isinstance(value, bool):
         return value
+
+    if not isinstance(value, str):
+        raise TypeError(
+            f"Got neither bool nor str for bool structure hook? {value} of type {type(value)}"
+        )
 
     if value.isnumeric():
         return bool(int(value))
@@ -30,11 +35,6 @@ def bool_unstructure_hook(value: bool) -> int:
     return int(value)
 
 
-@gd_converter.register_unstructure_hook
-def gd_list_unstructure_hook(value: list) -> str:
-    return ",".join(value)
-
-
 def gd_list_structure_hook(value: str, t: type) -> list:
     args = get_args(t)
     list_type = args[0] if args else str
@@ -47,13 +47,18 @@ gd_converter.register_structure_hook_func(
 )
 
 
+@gd_converter.register_unstructure_hook
+def gd_list_unstructure_hook(value: list) -> str:
+    return ",".join(map(str, value))
+
+
 @gd_converter.register_structure_hook
-def b64_string_hook(value: str, _) -> B64String:
+def b64_string_structure_decode_hook(value: str, _) -> B64String:
     return B64String(urlsafe_b64decode(value.encode()).decode())
 
 
 @gd_converter.register_structure_hook
-def datetime_hook(value: str, _) -> datetime:
+def datetime_structure_hook(value: str, _) -> datetime:
     return datetime.fromtimestamp(int(value))
 
 
