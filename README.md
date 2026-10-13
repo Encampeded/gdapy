@@ -1,9 +1,9 @@
-# GDA.py
+# gdapy
 
-A simple yet powerful Python Geometry Dash API Wrapper built around attrs/cattrs.
+A simple yet powerful Geometry Dash API Wrapper written in Python.
 
 > [!WARNING]
-> This library is **unfinished**; many endpoints are missing, have an unfinished implementation, or are otherwise untested. PROCEED WITH CAUTION!
+> This library is **unfinished**. Many endpoints are missing, have an unfinished implementation, or are otherwise untested. PROCEED WITH CAUTION!
 
 Huge thanks to the [gd-docs](boomlings.dev) project for providing the documentation that made this possible.
 
@@ -37,7 +37,7 @@ Retray V2 - Unrated
 >>> response = client.levels.download_level(response.levels[0].id)
 >>> response
 DownloadLevelResponse(
-    level=DownloadLevel(
+level=DownloadLevel(
         id=6508283,
         name='ReTraY',
         description='Thanks for playing Geometry Dash',
@@ -69,8 +69,6 @@ For more examples, see the documentation.
 
 > [!WARNING]
 > The documentation does not presently exist!
-
-Alternatively, look around using autocomplete, for basic api usage.
 
 ## Contributing
 
