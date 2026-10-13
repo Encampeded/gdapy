@@ -1,7 +1,15 @@
 from datetime import datetime
-from typing import Any, NamedTuple, get_args
+from typing import Any, get_args
 
-from pyheck import snake
+from attrs import define, field
+from pyheck import lower_camel, snake
+
+
+def to_snake(string: str) -> str:
+    name = snake(string)
+    if name.endswith("_i_ds"):
+        name = name.removesuffix("_i_ds") + "_ids"
+    return name
 
 
 def type_to_str_rec(t: Any) -> str:
@@ -14,23 +22,56 @@ def type_to_str_rec(t: Any) -> str:
     return field_type
 
 
-class Field(NamedTuple):
+@define(frozen=True)
+class Field:
     name: str
     type: type | str
-    default: str = ""
+    field_values: dict[str, Any] = field(factory=dict)
+
+    def get_key_name(self) -> str:
+
+        return (
+            self.name
+            if "alias" not in self.field_values
+            else lower_camel(self.field_values["alias"].replace("_id", "_ID"))
+        )
 
     def type_to_str(self) -> str:
         return type_to_str_rec(self.type)
 
-    def to_line(self) -> str:  # TODO: snake_case name
+    def to_line(self) -> str:
 
-        name = snake(self.name)
-        if "_i_ds" in name:
-            name = name.replace("_i_ds", "_ids")
+        name = to_snake(self.name)
+
+        if name.endswith("_i_ds"):
+            name = name.removesuffix("_i_ds") + "_ids"
 
         field_type = self.type_to_str()
 
-        default = " = " + self.default if self.default else ""
+        default = ""
+
+        if self.field_values:
+            if len(self.field_values) == 1 and "default" in self.field_values:
+                default = f" = {self.field_values['default']}"
+
+            else:
+                field_values: str = ", ".join(
+                    [
+                        f"{key}={
+                            (
+                                repr(value)
+                                if not (
+                                    isinstance(value, str)
+                                    and value.startswith('lambda')
+                                )
+                                else value
+                            )
+                        }"
+                        for key, value in self.field_values.items()
+                    ]
+                )
+
+                default = f" = field({field_values})"
 
         return f"    {name}: {field_type}{default}\n"
 
@@ -39,8 +80,8 @@ F = Field
 
 KEY: dict[str, dict[str, Field]] = {
     "Song": {
-        "1": F("ID", int, ""),
-        "2": F("name", str, ""),
+        "1": F("ID", int),
+        "2": F("name", str),
         "3": F("artistID", int),
         "4": F("artistName", str),
         "5": F("size", float),
@@ -56,9 +97,7 @@ KEY: dict[str, dict[str, Field]] = {
         "15": F("extraArtistNames", list[int]),
         "16": F("downloadSoundtrackOverride", str),
         "17": F("songLink", str),
-        "18": F(
-            "artistLinks", str
-        ),  # {artistID},{platformID},,{url}; | 1 = YouTube, 5 = Bandcamp, 7 = Personal Website, 8 = Instagram
+        "18": F("artistLinks", str),
     },
     "Comment": {
         "1": F("levelID", int),
@@ -76,14 +115,10 @@ KEY: dict[str, dict[str, Field]] = {
         "15": F("timestamp", datetime),
     },
     "Level": {
-        "1": F("id", int, 'field(alias="level_id")'),
-        "2": F("name", str, 'field(alias="level_name")'),
+        "1": F("id", int, {"alias": "level_id"}),
+        "2": F("name", str, {"alias": "level_name"}),
         "3": F("description", "B64String"),
-        "4": F(
-            "levelString",
-            str,
-            "field(repr=lambda s: s[:64] + '...' if len(s) > 64 else s)",
-        ),
+        "4": F("levelString", str, {"repr": "lambda s: s[:64] + '...'"}),
         "5": F("version", int),
         "6": F("userID", int),
         "7": F("difficulty", int),
@@ -154,20 +189,20 @@ KEY: dict[str, dict[str, Field]] = {
         "12": F("shipID", int),
         "13": F("secretCoins", int),
         "14": F("iconType", "Gamemode"),
-        "15": F("glow", bool, 'field(alias="special")'),
+        "15": F("glow", bool, {"alias": "special"}),
         "16": F("accountID", int),
         "17": F("userCoins", int),
         "18": F("messageState", int),
-        "19": F("friendRequestsState", int, 'field(alias="friends_state")'),
-        "20": F("youtube", str, 'field(alias="you_tube")'),
-        "21": F("icon", int, 'field(alias="acc_icon")'),
-        "22": F("ship", int, 'field(alias="acc_ship")'),
-        "23": F("ball", int, 'field(alias="acc_ball")'),
-        "24": F("ufo", int, 'field(alias="acc_bird")'),
-        "25": F("wave", int, 'field(alias="acc_dart")'),
-        "26": F("robot", int, 'field(alias="acc_robot")'),
-        "27": F("streak", int, 'field(alias="acc_streak")'),
-        "28": F("glow", bool, 'field(alias="acc_glow")'),
+        "19": F("friendRequestsState", int, {"alias": "friends_state"}),
+        "20": F("youtube", str, {"alias": "you_tube"}),
+        "21": F("icon", int, {"alias": "acc_icon"}),
+        "22": F("ship", int, {"alias": "acc_ship"}),
+        "23": F("ball", int, {"alias": "acc_ball"}),
+        "24": F("ufo", int, {"alias": "acc_bird"}),
+        "25": F("wave", int, {"alias": "acc_dart"}),
+        "26": F("robot", int, {"alias": "acc_robot"}),
+        "27": F("streak", int, {"alias": "acc_streak"}),
+        "28": F("glow", bool, {"alias": "acc_glow"}),
         "29": F("isRegistered", bool),
         "30": F("globalRank", int),
         "31": F("friendState", int),
@@ -179,17 +214,17 @@ KEY: dict[str, dict[str, Field]] = {
         "40": F("newFriends", int),
         "41": F("newFriendRequest", bool),
         "42": F("age", str),
-        "43": F("spider", int, 'field(alias="acc_spider")'),
+        "43": F("spider", int, {"alias": "acc_spider"}),
         "44": F("twitter", str),
         "45": F("twitch", str),
         "46": F("diamonds", int),
-        "48": F("explosion", int, 'field(alias="acc_explosion")'),
+        "48": F("explosion", int, {"alias": "acc_explosion"}),
         "49": F("mod", int),
         "50": F("commentHistoryState", int),
         "51": F("color3", int),
         "52": F("moons", int),
-        "53": F("swing", int, 'field(alias="acc_swing")'),
-        "54": F("jetpack", int, 'field(alias="acc_jetpack")'),
+        "53": F("swing", int, {"alias": "acc_swing"}),
+        "54": F("jetpack", int, {"alias": "acc_jetpack"}),
         "55": F("demons", "Demons"),
         "56": F("classicLevels", "ClassicLevels"),
         "57": F("platformerLevels", "PlatformerLevels"),

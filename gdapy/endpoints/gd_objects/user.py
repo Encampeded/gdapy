@@ -156,29 +156,29 @@ class DownloadUser(User):
     account_id: int
     user_coins: int
     message_state: int
-    friend_requests_state: int = field(alias="friends_state")
-    youtube: str = field(alias="you_tube")
-    icon: int = field(alias="acc_icon")
-    ship: int = field(alias="acc_ship")
-    ball: int = field(alias="acc_ball")
-    ufo: int = field(alias="acc_bird")
-    wave: int = field(alias="acc_dart")
-    robot: int = field(alias="acc_robot")
-    glow: bool = field(alias="acc_glow")
+    friend_requests_state: int = field(alias='friends_state')
+    youtube: str = field(alias='you_tube')
+    icon: int = field(alias='acc_icon')
+    ship: int = field(alias='acc_ship')
+    ball: int = field(alias='acc_ball')
+    ufo: int = field(alias='acc_bird')
+    wave: int = field(alias='acc_dart')
+    robot: int = field(alias='acc_robot')
+    glow: bool = field(alias='acc_glow')
     is_registered: bool
     global_rank: int
     friend_state: int
-    spider: int = field(alias="acc_spider")
+    spider: int = field(alias='acc_spider')
     twitter: str
     twitch: str
     diamonds: int
-    explosion: int = field(alias="acc_explosion")
+    explosion: int = field(alias='acc_explosion')
     mod: int
     comment_history_state: int
     color3: int
     moons: int
-    swing: int = field(alias="acc_swing")
-    jetpack: int = field(alias="acc_jetpack")
+    swing: int = field(alias='acc_swing')
+    jetpack: int = field(alias='acc_jetpack')
     demons: Demons
     classic_levels: ClassicLevels
     platformer_levels: PlatformerLevels
@@ -212,7 +212,7 @@ class SearchUser(User):
     color2: int
     secret_coins: int
     icon_type: Gamemode
-    glow: bool = field(alias="special")
+    glow: bool = field(alias='special')
     account_id: int
     user_coins: int
     diamonds: int
@@ -235,7 +235,7 @@ class LeaderboardUser(User):
     color2: int
     secret_coins: int
     icon_type: Gamemode
-    glow: bool = field(alias="special")
+    glow: bool = field(alias='special')
     account_id: int
     user_coins: int
     diamonds: int
@@ -256,7 +256,7 @@ class LevelLeaderboardUser(User):
     color: int
     color2: int
     icon_type: Gamemode
-    glow: bool = field(alias="special")
+    glow: bool = field(alias='special')
     account_id: int
     age: str
     color3: int
@@ -281,7 +281,7 @@ class FriendRequestUser(User):
     color: int
     color2: int
     icon_type: Gamemode
-    glow: bool = field(alias="special")
+    glow: bool = field(alias='special')
     account_id: int
     friend_request_id: int
     friend_request_message: str
@@ -299,7 +299,7 @@ class CommentUser(User):
     color: int
     color2: int
     icon_type: Gamemode
-    glow: bool = field(alias="special")
+    glow: bool = field(alias='special')
     account_id: int
     color3: int
     ## END AUTO GENERATED FIELDS

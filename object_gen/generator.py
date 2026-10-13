@@ -1,6 +1,7 @@
 import os
 import re
 
+from attrs import evolve
 from key import KEY
 from objects import OBJECTS
 
@@ -30,7 +31,11 @@ def generate_fields(object_type: str, keys: list[int]) -> str:
         field = KEY[object_type][str(abs(int_key))]
 
         if int_key < 0:
-            field = field._replace(type=field.type_to_str() + " | None", default="None")
+            field = evolve(
+                field,
+                type=field.type_to_str() + " | None",
+                field_values={**field.field_values, "default": None},
+            )
 
         fields += field.to_line()
 
@@ -97,47 +102,18 @@ for object_filename in os.listdir(DIRECTORY):
 
     file = re.sub(RE_CLASS, rewrite_fields, file)
 
+    # print(file)
+    # continue
+
     print("    Writing", object_filename)
     with open(object_path, "w") as f:
         f.write(file)
     print("    Done!")
 
-"""
-open file
-get object_type with RE_OBJECT_TYPE
-match to RE_CLASS
-for every match:
-
-    keys = key[object_type][match[0]]
-    for obj in key[object_type]:
-        if obj in match[1]:
-            keys -= key[object_type][obj]
-
-    fields: str = gen_fields(object_type, keys)
-    file.replace(match[2], fields)
-
----
-
-matches = re.match(RE_CLASS_NAME)
-
-if re.match(RE_CLASS_NAME):
-    current_object = matched_name
-
-if not FIELDS_BEGIN in current_line:
-    continue
-
-fields_end_index: int = next (FIELDS_END in line)
-current_file[fields_begin_index:fields_end_index] = []
-
-fields = [
-    KEY[current_object][present_key]
-    for present_key in objects[current_object]:
-]
-
-current_file.insert(fields_begin_index, fields)
-i = fields_end_index
-"""
-# Groups:
-#   1. ClassName
-#   2. Inherits From
-#   3. Fields (to replace)
+# print("Updating key...")
+# new_key: dict[str, dict[str, str]] = {}
+# for object_type, mappings in KEY.items():
+#     new_key[object_type] = {
+#         k: v.get_key_name()
+#         for k, v in mappings.items()
+#     }

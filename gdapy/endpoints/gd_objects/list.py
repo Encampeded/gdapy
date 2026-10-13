@@ -11,8 +11,8 @@ class List(GDObject):
 @define
 class SearchList(List):
     ## BEGIN AUTO GENERATED FIELDS
-    id: int = field(alias="level_id")
-    name: str = field(alias="level_name")
+    id: int = field(alias='level_id')
+    name: str = field(alias='level_name')
     description: B64String
     version: int
     difficulty: int
