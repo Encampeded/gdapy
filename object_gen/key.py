@@ -55,6 +55,7 @@ KEY: dict[str, dict[str, Field]] = {
         "14": F("newType", int),
         "15": F("extraArtistNames", list[int]),
         "16": F("downloadSoundtrackOverride", str),
+        "17": F("songLink", str),
         "18": F(
             "artistLinks", str
         ),  # {artistID},{platformID},,{url}; | 1 = YouTube, 5 = Bandcamp, 7 = Personal Website, 8 = Instagram

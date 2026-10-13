@@ -39,7 +39,7 @@ class LevelSong(Song):
     download_soundtrack_override: str
     nong_enum: int | None = None
     extra_artist_ids: list[int] | None = None
-    artist_links: str | None = None
+    new: bool | None = None
     ## END AUTO GENERATED FIELDS
 
 
@@ -56,6 +56,10 @@ class DownloadSong(Song):
     is_verified: bool
     link: str
     download_soundtrack_override: str
+    nong_enum: int | None = None
+    extra_artist_ids: list[int] | None = None
+    new: bool | None = None
+    song_link: str | None = None
     artist_links: str | None = None
     ## END AUTO GENERATED FIELDS
 

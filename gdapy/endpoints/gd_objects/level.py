@@ -104,7 +104,7 @@ class DownloadLevel(Level):
     id: int = field(alias="level_id")
     name: str = field(alias="level_name")
     description: B64String
-    level_string: str = field(repr=lambda s: s[:64] + "..." if len(s) > 64 else s)
+    level_string: str = field(repr=lambda s: s[:64] + '...' if len(s) > 64 else s)
     version: int
     user_id: int
     difficulty_denominator: int

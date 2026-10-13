@@ -148,6 +148,7 @@ KEY = {
         '14': "newType",
         '15': "extraArtistNames",
         '16': "downloadSoundtrackOverride",
+        '17': "songLink",
         '18': "artistLinks"
     },
 
