@@ -1,6 +1,6 @@
 from attrs import define
 
-from ...KEY import KEY
+from ...key import KEY
 from .gd_object import GDObject
 
 

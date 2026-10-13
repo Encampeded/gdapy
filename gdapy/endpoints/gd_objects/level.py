@@ -5,7 +5,7 @@ from zlib import decompress
 from attrs import define, field
 
 from ...enums.misc import XORKeys
-from ...KEY import KEY  # TODO: Move whatever is in/uses KEY to an enum
+from ...key import KEY  # TODO: Move whatever is in/uses KEY to an enum
 from ...utils import gd_xor_cipher
 from .gd_object import GDObject
 from .gd_types import B64String
