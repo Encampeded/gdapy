@@ -1,7 +1,7 @@
 from attrs import define, field
 from cattrs.gen import make_dict_unstructure_fn
 
-from ...enums.levels import DemonDifficulty, Difficulty, Length, Rating
+from ...enums.levels import DemonDifficulty, Difficulty, LevelLength, Rating
 from ..gd_objects.gd_converter import gd_converter
 from ..gd_objects.level import DownloadLevel, SearchLevel
 from ..gd_objects.song import LevelSong
@@ -53,7 +53,7 @@ class SearchFilters:
     difficulties: list[Difficulty] = field(factory=list, alias="diff")
     demon_difficulty: DemonDifficulty | None = field(default=None, alias="demonFilter")
 
-    lengths: list[Length] = field(factory=list, alias="len")
+    lengths: list[LevelLength] = field(factory=list, alias="len")
     is_rated: bool = field(default=False, alias="star")
 
     # Following are in the "Advanced Options" menu in the client

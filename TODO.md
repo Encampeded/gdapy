@@ -5,7 +5,6 @@
   - warn on unknown keys (name UNKNOWNKEY_32) instead of raising an error
   - warn on extra fields
 - Would be nice if properties could be included in gd_objects repr
-- Could we add an OfficialSong enum?
 - SearchType: aliases only on unstructure
 - Use GDTuple for lists of set numbers of values (ex RGB values)
 
@@ -36,5 +35,3 @@
   - sentinels for EMPTY vs None would be nice, for values that are present but empty
   - frozendict for dict function arguments instead of `if argument is None` boilerplate
   - Probably early to update though, and would limit the library's flexibility...
-
-- Figure out a place for key.py; should probably replace the KEY.py in gdapy with the one with object_gen, but the tuple situation will cause issues

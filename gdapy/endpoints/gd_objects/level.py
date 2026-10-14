@@ -1,11 +1,18 @@
 from base64 import b64decode, urlsafe_b64decode
 from datetime import datetime
+from typing import TYPE_CHECKING
 from zlib import decompress
 
 from attrs import define, field
 
+from ...enums.levels import (
+    DifficultyNumerator,
+    EpicRating,
+    LevelDemonDifficulty,
+    LevelLength,
+    OfficialSong,
+)
 from ...enums.misc import XORKeys
-from ...key import KEY  # TODO: Move whatever is in/uses KEY to an enum
 from ...utils import gd_xor_cipher
 from .gd_object import GDObject
 from .gd_types import B64String
@@ -23,31 +30,37 @@ class BeatenLevel:
 class Level(GDObject):
     object_type = "Level"
 
-    # TODO: Is using properties really the best way to do this?
-    # I think it is.
-
-    @property
-    def length_text(self) -> str:
-        return KEY["length"][self.raw_dict["length"]]
+    # this feels mildly unholy
+    # so does writing typed python so
+    if TYPE_CHECKING:
+        auto: bool
+        demon: bool
+        demon_difficulty: LevelDemonDifficulty
+        difficulty_numerator: DifficultyNumerator
+        stars: int
+        feature_score: int
+        epic: EpicRating
+        official_song: OfficialSong
 
     @property
     def difficulty(self) -> str:
-        if self.raw_dict["auto"] == "1":
+        if self.auto:
             return "Auto"
 
-        elif self.raw_dict["demon"] == "1":
-            return KEY["demonDifficulty"][self.raw_dict["demonDifficulty"]] + " Demon"
+        if self.demon:
+            return str(self.demon_difficulty)
 
-        return KEY["difficulty"][self.raw_dict["difficultyNumerator"]]
+        return str(self.difficulty_numerator)
 
     @property
     def rating(self) -> str:
-        if self.raw_dict["stars"] == "0":
+        if not self.stars:
             return "Unrated"
-        elif self.raw_dict["featureScore"] == "0":
+
+        elif not self.feature_score:
             return "Star Rated"
 
-        return KEY["rating"][self.raw_dict["epic"]]
+        return str(self.epic)
 
     @property
     def game_version_semantic(self) -> float:
@@ -62,24 +75,24 @@ class Level(GDObject):
 
     @property
     def official_song_name(self) -> str:
-        return KEY["officialSong"][self.raw_dict["officialSong"]]
+        return str(self.official_song)
 
 
 @define
 class SearchLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    id: int = field(alias='level_id')
-    name: str = field(alias='level_name')
+    id: int = field(alias="level_id")
+    name: str = field(alias="level_name")
     description: B64String
     version: int
     user_id: int
     difficulty_denominator: int
-    difficulty_numerator: int
+    difficulty_numerator: DifficultyNumerator
     downloads: int
-    official_song: int
+    official_song: OfficialSong
     game_version: int
     likes: int
-    length: int
+    length: LevelLength
     demon: bool
     stars: int
     feature_score: int
@@ -90,8 +103,8 @@ class SearchLevel(Level):
     coins: int
     verified_coins: bool
     stars_requested: int
-    epic: int
-    demon_difficulty: int
+    epic: EpicRating
+    demon_difficulty: LevelDemonDifficulty
     objects: int
     editor_time: int
     editor_time_copies: int | None = None
@@ -101,19 +114,19 @@ class SearchLevel(Level):
 @define
 class DownloadLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    id: int = field(alias='level_id')
-    name: str = field(alias='level_name')
+    id: int = field(alias="level_id")
+    name: str = field(alias="level_name")
     description: B64String
-    level_string: str = field(repr=lambda s: s[:64] + '...')
+    level_string: str = field(repr=lambda s: s[:64] + "...")
     version: int
     user_id: int
     difficulty_denominator: int
-    difficulty_numerator: int
+    difficulty_numerator: DifficultyNumerator
     downloads: int
-    official_song: int
+    official_song: OfficialSong
     game_version: int
     likes: int
-    length: int
+    length: LevelLength
     demon: bool
     stars: int
     feature_score: int
@@ -129,8 +142,8 @@ class DownloadLevel(Level):
     verified_coins: bool
     stars_requested: int
     low_detail_mode: bool
-    epic: int
-    demon_difficulty: int
+    epic: EpicRating
+    demon_difficulty: LevelDemonDifficulty
     objects: int
     exact_upload_time: datetime
     exact_update_time: datetime

@@ -6,6 +6,7 @@ from typing import Any, get_args, get_origin
 
 from cattrs import Converter
 
+from ...enums.gd_enum import GDEnum
 from .gd_types import B64String
 
 gd_converter = Converter(forbid_extra_keys=True, use_alias=True)
@@ -60,6 +61,11 @@ def b64_string_structure_decode_hook(value: str, _) -> B64String:
 @gd_converter.register_structure_hook
 def datetime_structure_hook(value: str, _) -> datetime:
     return datetime.fromtimestamp(int(value))
+
+
+@gd_converter.register_structure_hook
+def gd_enum_structure_hook(value: str, t) -> GDEnum:
+    return t(int(value))
 
 
 # Hook factory for: T | None types, where empty string evaluates to None.

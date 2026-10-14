@@ -1,7 +1,5 @@
-from base64 import urlsafe_b64encode
 from typing import TYPE_CHECKING
 
-from ..enums.levels import DemonDifficulty, Difficulty, SearchType, Unlisted
 from .endpoint_objects.lists import GetListsResponse
 from .endpoint_objects.page import PageInfo
 from .gd_objects.list import SearchList
