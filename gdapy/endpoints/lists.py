@@ -1,9 +1,7 @@
 from typing import TYPE_CHECKING
 
-from .endpoint_objects.lists import GetListsResponse
-from .endpoint_objects.page import PageInfo
-from .gd_objects.list import SearchList
-from .gd_objects.user import TinyUser
+from .endpoint_objects import GetListsResponse, PageInfo
+from .gd_objects import SearchList, TinyUser
 
 if TYPE_CHECKING:
     from ..client import GDClient

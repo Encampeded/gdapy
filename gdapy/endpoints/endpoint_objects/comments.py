@@ -1,6 +1,6 @@
 from attrs import define
 
-from ..gd_objects.comment import AccountComment, LevelComment, LevelHistoryComment
+from ..gd_objects import AccountComment, LevelComment, LevelHistoryComment
 from .page import PageInfo
 
 

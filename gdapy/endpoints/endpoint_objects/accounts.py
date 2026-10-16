@@ -1,9 +1,6 @@
-from enum import Enum
-
 from attrs import define, field
 
-from ..gd_objects.level import BeatenLevel
-from ..gd_objects.map_pack import BeatenMapPack
+from ..gd_objects import BeatenLevel, BeatenMapPack
 
 
 @define

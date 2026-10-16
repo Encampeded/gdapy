@@ -11,7 +11,6 @@
 
 **General Chores:**
 - GDObject.from_string() logic should probably be moved to gd_converter hooks
-- Standardize imports and __init__.py
 - List comprehensions for from_string: if input could be empty, add if object, 
   as "".split("|") returns [""] for... reasons.
 - Add docstrings for methods missing them

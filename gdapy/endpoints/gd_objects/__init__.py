@@ -1,6 +1,8 @@
+from .comment import *
 from .gd_object import GDObject
-from .level import SearchLevel, DownloadLevel
-from .map_pack import Gauntlet, MapPack
-from .song import Song
-from .comment import Comment, AccountComment, LevelComment, LevelHistoryComment
-from .user import DownloadUser, SearchUser, LeaderboardUser, LevelLeaderboardUser, FriendRequestUser, CommentUser
+from .gd_converter import gd_converter
+from .level import *
+from .list import *
+from .map_pack import *
+from .song import *
+from .user import *

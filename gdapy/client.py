@@ -11,7 +11,7 @@ from .endpoints import (
     SongsEndpoints,
     UsersEndpoints,
 )
-from .enums.misc import Platform, Secrets
+from .enums import Platform, Secrets
 from .errors import GDServerError, NotLoggedInError
 from .utils import is_integer
 

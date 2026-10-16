@@ -1,10 +1,12 @@
-from enum import StrEnum, IntEnum
+from enum import IntEnum, StrEnum
+
 
 class LeaderboardType(StrEnum):
     TOP = "top"
     RELATIVE = "relative"
     FRIENDS = "friends"
     CREATORS = "creators"
+
 
 class LeaderboardStatistic(IntEnum):
     STARS = 0

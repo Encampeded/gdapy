@@ -1,8 +1,7 @@
 from typing import TYPE_CHECKING
 
-from ..utils import present_keys
-from .endpoint_objects.page import Page, PageInfo
-from .gd_objects.song import DownloadSong, Song, TopArtist
+from .endpoint_objects import Page, PageInfo
+from .gd_objects import DownloadSong, TopArtist
 
 if TYPE_CHECKING:
     from ..client import GDClient

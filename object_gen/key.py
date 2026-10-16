@@ -36,8 +36,10 @@ class Field:
             else lower_camel(self.field_values["alias"].replace("_id", "_ID"))
         )
 
+
     def type_to_str(self) -> str:
         return type_to_str_rec(self.type)
+
 
     def to_line(self) -> str:
 
@@ -117,8 +119,8 @@ KEY: dict[str, dict[str, Field]] = {
     "Level": {
         "1": F("id", int, {"alias": "level_id"}),
         "2": F("name", str, {"alias": "level_name"}),
-        "3": F("description", "B64String"),
-        "4": F("levelString", str, {"repr": "lambda s: s[:64] + '...'"}),
+        "3": F("description", "B64String"), # This is abominable
+        "4": F("levelString", str, {"repr": "lambda s: \"\'\" + s[:64] + \"...\'\""}),
         "5": F("version", int),
         "6": F("userID", int),
         "7": F("difficulty", int),

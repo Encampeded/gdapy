@@ -6,9 +6,9 @@ from zlib import decompress
 from attrs import define, field
 
 from ...enums.levels import (
-    DifficultyNumerator,
     EpicRating,
     LevelDemonDifficulty,
+    LevelDifficulty,
     LevelLength,
     OfficialSong,
 )
@@ -36,7 +36,7 @@ class Level(GDObject):
         auto: bool
         demon: bool
         demon_difficulty: LevelDemonDifficulty
-        difficulty_numerator: DifficultyNumerator
+        difficulty_numerator: LevelDifficulty
         stars: int
         feature_score: int
         epic: EpicRating
@@ -87,7 +87,7 @@ class SearchLevel(Level):
     version: int
     user_id: int
     difficulty_denominator: int
-    difficulty_numerator: DifficultyNumerator
+    difficulty_numerator: LevelDifficulty
     downloads: int
     official_song: OfficialSong
     game_version: int
@@ -117,11 +117,11 @@ class DownloadLevel(Level):
     id: int = field(alias="level_id")
     name: str = field(alias="level_name")
     description: B64String
-    level_string: str = field(repr=lambda s: s[:64] + "...")
+    level_string: str = field(repr=lambda s: "'" + s[:64] + "...'")
     version: int
     user_id: int
     difficulty_denominator: int
-    difficulty_numerator: DifficultyNumerator
+    difficulty_numerator: LevelDifficulty
     downloads: int
     official_song: OfficialSong
     game_version: int
@@ -147,6 +147,7 @@ class DownloadLevel(Level):
     objects: int
     exact_upload_time: datetime
     exact_update_time: datetime
+    daily_number: int | None = None
     editor_time: int | None = None
     editor_time_copies: int | None = None
     song_ids: list[int] | None = None

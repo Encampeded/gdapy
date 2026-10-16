@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from hashlib import sha1
 from itertools import batched
 
-from .enums.misc import Salts, XORKeys
+from .enums import Salts, XORKeys
 from .key import KEY
 
 

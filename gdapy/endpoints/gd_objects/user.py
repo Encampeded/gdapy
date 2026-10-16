@@ -5,7 +5,7 @@ from typing import Self
 
 from attrs import define, field
 
-from ...enums.misc import Gamemode
+from ...enums import Gamemode
 from .gd_converter import gd_converter
 from .gd_object import GDObject
 

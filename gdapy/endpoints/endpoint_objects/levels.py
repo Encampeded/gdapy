@@ -1,11 +1,8 @@
 from attrs import define, field
 from cattrs.gen import make_dict_unstructure_fn
 
-from ...enums.levels import DemonDifficulty, Difficulty, LevelLength, Rating
-from ..gd_objects.gd_converter import gd_converter
-from ..gd_objects.level import DownloadLevel, SearchLevel
-from ..gd_objects.song import LevelSong
-from ..gd_objects.user import TinyUser
+from ...enums import DemonDifficulty, Difficulty, LevelLength
+from ..gd_objects import DownloadLevel, LevelSong, SearchLevel, TinyUser, gd_converter
 from .page import PageInfo
 
 

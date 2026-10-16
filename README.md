@@ -3,7 +3,7 @@
 A simple yet powerful Geometry Dash API Wrapper written in Python.
 
 > [!WARNING]
-> This library is **unfinished**. Many endpoints are missing, have an unfinished implementation, or are otherwise untested. PROCEED WITH CAUTION!
+> This library is **unfinished**. Many endpoints are missing, have incomplete implementation, or are otherwise untested. PROCEED WITH CAUTION!
 
 Huge thanks to the [gd-docs](boomlings.dev) project for providing the documentation that made this possible.
 
@@ -29,7 +29,7 @@ ReTraY 2018 - Unrated
 ReTraY  - Unrated
 Retray V2 - Unrated
 >>> retray_search_result = response.levels[0]
->>> # Many objects include property wrappers for otherwise obtuse values.
+>>> # Many objects include convenient properties wrapping otherwise obtuse values.
 >>> retray_search_result.difficulty
 'Easy'
 >>> retray_search_result.game_version_semantic

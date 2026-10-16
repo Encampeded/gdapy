@@ -5,10 +5,9 @@ from typing import TYPE_CHECKING, Annotated
 from zlib import decompress
 
 from .. import utils
-from ..enums.misc import Salts, Secrets
-from .endpoint_objects.accounts import AccountSettings, SyncAccountResponse
-from .gd_objects.level import BeatenLevel
-from .gd_objects.map_pack import BeatenMapPack
+from ..enums import Salts, Secrets
+from .endpoint_objects import AccountSettings, SyncAccountResponse
+from .gd_objects import BeatenLevel, BeatenMapPack
 
 """
 UNIMPLEMENTED: update_acount_settings

@@ -1,5 +1,9 @@
-from enum import Enum, IntEnum, StrEnum
+from enum import IntEnum, StrEnum
 
+from .gd_enum import GDEnum
+
+# Endpoint Argument Enums
+# Used by endpoint/levels.py
 
 class SearchType(IntEnum):
     SEARCH = 0
@@ -25,7 +29,7 @@ class SearchType(IntEnum):
     EVENT_HISTORY = 23
     # REPORTED_LEVELS = 24 # Elder mods only
     LIST = 25  # str is listID
-    # LIST_OF_LEVELS_3 = 26 # same as type 19 (unknown list of levels) but can return up to 100 levels
+    LIST_OF_LEVELS = 26 # same as type 19 (unknown list of levels) but can return up to 100 levels
     # SENT_2 = 27 # TODO FIXME: GDDocs just calls this Sent
     GD_LITE_WEEKLY_LEVELS = 28
     GD_LITE_BONUS_LEVELS = 29
@@ -37,15 +41,8 @@ class DailyType(IntEnum):
     EVENT = 2
 
 
-# Parameter enums
+# Endpoint enums
 # Used by endpoints/endpoint_objects/levels.py
-
-
-class Unlisted(Enum):
-    PUBLIC = 0
-    FRIENDS_ONLY = 1
-    UNLISTED = 2
-
 
 class Rating(StrEnum):
     UNRATED = "noStar"
@@ -74,16 +71,39 @@ class Difficulty(IntEnum):
     INSANE_DEMON = 9
     EXTREME_DEMON = 10
 
-
+# Used by SearchFilterss
 class DemonDifficulty(IntEnum):
+    """SearchFilters DemonDifficulty filter"""
     EASY = 1
     MEDIUM = 2
     HARD = 3
     INSANE = 4
     EXTREME = 5
 
+# Field enums
+# Used by endpoints/gd_objects/levels.py
 
-class Length(IntEnum):
+# the world if level object used the same enums as everything else
+# ✨✨✨✨✨✨✨
+# alas, said world is unrealistic and impossible :(
+
+class LevelDifficulty(GDEnum):
+    UNRATED = 0
+    EASY = 10
+    NORMAL = 20
+    HARD = 30
+    HARDER = 40
+    INSANE = 50
+
+class LevelDemonDifficulty(GDEnum):
+    EASY_DEMON = 3
+    MEDIUM_DEMON = 4
+    HARD_DEMON = 0
+    INSANE_DEMON = 5
+    EXTREME_DEMON = 6
+
+
+class LevelLength(GDEnum):
     TINY = 0
     SHORT = 1
     MEDIUM = 2
@@ -91,6 +111,52 @@ class Length(IntEnum):
     XL = 4
     PLATFORMER = 5
 
+class EpicRating(GDEnum):
+    NONE = 0
+    EPIC = 1
+    LEGENDARY = 2
+    MYTHIC = 3
 
-# Object enums
-# Used by endpoints/gd_objects/levels.py
+
+class OfficialSong(GDEnum):
+    PRACTICE_STAY_INSIDE_ME = -1
+    STEREO_MADNESS = 0
+    BACK_ON_TRACK = 1
+    POLARGEIST = 2
+    DRY_OUT = 3
+    BASE_AFTER_BASE = 4
+    CANT_LET_GO = 5
+    JUMPER = 6
+    TIME_MACHINE = 7
+    CYCLES = 8
+    XSTEP = 9
+    CLUTTERFUNK = 10
+    THEORY_OF_EVERYTHING = 11
+    ELECTROMAN_ADVENTURES = 12
+    CLUBSTEP = 13
+    ELECTRODYNAMIX = 14
+    HEXAGON_FORCE = 15
+    BLAST_PROCESSING = 16
+    THEORY_OF_EVERYTHING_2 = 17
+    GEOMETRICAL_DOMINATOR = 18
+    DEADLOCKED = 19
+    FINGERDASH = 20
+    DASH = 21
+    EXPLORERS = 22
+    THE_SEVEN_SEAS = 23
+    VIKING_ARENA = 24
+    AIRBORNE_ROBOTS = 25
+    SECRET = 26
+    PAYLOAD = 27
+    BEAST_MODE = 28
+    MACHINA = 29
+    YEARS = 30
+    FRONTLINES = 31
+    SPACE_PIRATES = 32
+    STRIKER = 33
+    EMBERS = 34
+    ROUND_1 = 35
+    MONSTER_DANCE_OFF = 36
+    PRESS_START = 37
+    NOCK_EM = 38
+    POWER_TRIP = 39

@@ -2,8 +2,8 @@ from base64 import urlsafe_b64encode
 from typing import TYPE_CHECKING, Annotated
 
 from .. import utils
-from ..enums.misc import XORKeys
-from .endpoint_objects.page import Page, PageInfo
+from ..enums import XORKeys
+from .endpoint_objects import Page, PageInfo
 from .gd_objects import AccountComment, CommentUser, LevelComment, LevelHistoryComment
 
 if TYPE_CHECKING:

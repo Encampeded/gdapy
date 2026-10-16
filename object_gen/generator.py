@@ -47,8 +47,6 @@ for object_filename in os.listdir(DIRECTORY):
     if not object_filename.endswith(".py"):
         continue
 
-    print("\nFound", object_filename)
-
     object_path = os.path.join(DIRECTORY, object_filename)
 
     with open(object_path, "r") as f:
@@ -63,8 +61,9 @@ for object_filename in os.listdir(DIRECTORY):
     object_type_match = re.search(RE_OBJECT_TYPE, file)
 
     if object_type_match is None:
-        print("    Failed to find object_type in", object_filename)
         continue
+
+    print("\nFound", object_filename)
 
     object_type: str = object_type_match.group(1)
 
@@ -72,7 +71,7 @@ for object_filename in os.listdir(DIRECTORY):
         full_match: str = match.group(0)
 
         object_name: str = match.group(1)
-        print("        Found", object_name)
+        print("    Writing", object_name)
 
         if object_name not in OBJECTS[object_type]:
             print(OBJECTS[object_type])
@@ -105,10 +104,15 @@ for object_filename in os.listdir(DIRECTORY):
     # print(file)
     # continue
 
-    print("    Writing", object_filename)
+    print("        Writing file...")
     with open(object_path, "w") as f:
         f.write(file)
     print("    Done!")
+
+
+# from deepdiff import DeepDiff
+# from key_old import KEY as OLD_KEY
+# from pprint import pprint
 
 # print("Updating key...")
 # new_key: dict[str, dict[str, str]] = {}
@@ -117,3 +121,5 @@ for object_filename in os.listdir(DIRECTORY):
 #         k: v.get_key_name()
 #         for k, v in mappings.items()
 #     }
+
+# pprint(DeepDiff(OLD_KEY, new_key))

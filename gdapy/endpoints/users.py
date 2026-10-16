@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from ..enums.users import LeaderboardStatistic, LeaderboardType
+from ..enums import LeaderboardStatistic, LeaderboardType
 from .gd_objects import DownloadUser, LeaderboardUser, SearchUser
 
 if TYPE_CHECKING:

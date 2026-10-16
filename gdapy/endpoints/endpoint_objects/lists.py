@@ -1,7 +1,6 @@
 from attrs import define
 
-from ..gd_objects.list import SearchList
-from ..gd_objects.user import TinyUser
+from ..gd_objects import SearchList, TinyUser
 from .page import PageInfo
 
 

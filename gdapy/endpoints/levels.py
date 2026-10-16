@@ -1,17 +1,24 @@
 from typing import TYPE_CHECKING, Literal
 
 from .. import utils
-from ..enums.levels import DailyType, SearchType
+from ..enums import DailyType, SearchType
 from ..errors import NotImplementedModEndpointError
-from .endpoint_objects.levels import (
+from .endpoint_objects import (
     DownloadLevelResponse,
     GetLevelsResponse,
+    Page,
+    PageInfo,
     SearchFilters,
 )
-from .endpoint_objects.page import Page, PageInfo
-from .gd_objects import DownloadLevel, Gauntlet, MapPack, SearchLevel
-from .gd_objects.song import LevelSong
-from .gd_objects.user import LevelLeaderboardUser, TinyUser
+from .gd_objects import (
+    DownloadLevel,
+    Gauntlet,
+    LevelLeaderboardUser,
+    LevelSong,
+    MapPack,
+    SearchLevel,
+    TinyUser,
+)
 
 if TYPE_CHECKING:
     from ..client import GDClient

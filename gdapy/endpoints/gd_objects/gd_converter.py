@@ -6,7 +6,7 @@ from typing import Any, get_args, get_origin
 
 from cattrs import Converter
 
-from ...enums.gd_enum import GDEnum
+from ...enums import GDEnum
 from .gd_types import B64String
 
 gd_converter = Converter(forbid_extra_keys=True, use_alias=True)
