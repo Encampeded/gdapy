@@ -6,5 +6,8 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = ["cattrs", "pyheck"]
 
+[tool.setuptools.packages.find]
+include = ["gdapy"]
+
 [tool.ruff]
 exclude = ["__init__.py"]

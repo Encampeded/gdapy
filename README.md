@@ -76,14 +76,15 @@ Wow, I'm flattered. The following sections specify general code-stuffs for the l
 
 ### Program Flow
 1. Endpoint method called
-2. Method parses arguments and calls GDClient.gd_post()
-3. If response is negative number, gd_post raises an GDServerError exception (will eventually be replaced with per-endpoint exceptions)
-4. Endpoint method takes the raw_string response and parses it into a response, possibly from endpoint_objects
-5. If it's a gd_object, GDObject.from_string(raw_object_str) turns it into a gd_object
+2. Method parses arguments and calls `GDClient.gd_post()`
+3. If response is negative number, `gd_post()` raises a `GDServerError` (will eventually be replaced with per-endpoint exceptions)
+4. Endpoint method takes the raw string `response` and parses it; possibly (likely) structuring it into `gd_object`s (using `GDObject.from_string(raw_string)`) and an `endpoint_object`
 
 ### Project Structure
 `gdapy/enums`
-- Contains any enums used by the user; generally endpoint parameters; object attribute enums should be in endpoint_objects
+- Contains all and any gd enums
+  - Endpoint parameters
+  - Object attributes
 
 `gdapy/endpoints`
 - Contains endpoint classes used by client.py
