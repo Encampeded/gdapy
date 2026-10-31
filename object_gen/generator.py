@@ -1,11 +1,15 @@
 import os
 import re
+from pathlib import Path
 
 from attrs import evolve
 from key import KEY
 from objects import OBJECTS
 
-DIRECTORY = "/".join(__file__.split("/")[:-2]) + "/gdapy/endpoints/gd_objects"
+# FIXME: Pretty sure this only works on linux...
+PATH_LIBRARY = Path(__file__).resolve().parent.parent / "gdapy"
+PATH_OBJECTS = PATH_LIBRARY / "endpoints" / "gd_objects"
+PATH_KEY     = PATH_LIBRARY / "key.py"
 
 ## BEGIN AUTO GENERATED FIELDS
 ## END AUTO GENERATED FIELDS
@@ -43,11 +47,11 @@ def generate_fields(object_type: str, keys: list[int]) -> str:
 
 
 # TODO: Clean up variable names here
-for object_filename in os.listdir(DIRECTORY):
+for object_filename in os.listdir(PATH_OBJECTS):
     if not object_filename.endswith(".py"):
         continue
 
-    object_path = os.path.join(DIRECTORY, object_filename)
+    object_path = PATH_OBJECTS / object_filename
 
     with open(object_path, "r") as f:
         file = f.read()
@@ -109,17 +113,18 @@ for object_filename in os.listdir(DIRECTORY):
         f.write(file)
     print("    Done!")
 
+print("\nUpdating key...")
 
-# from deepdiff import DeepDiff
-# from key_old import KEY as OLD_KEY
-# from pprint import pprint
+new_key: dict[str, dict[str, str]] = {
+    object_type: {k: v.get_key_name() for k, v in mappings.items()}
+    for object_type, mappings in KEY.items()
+}
 
-# print("Updating key...")
-# new_key: dict[str, dict[str, str]] = {}
-# for object_type, mappings in KEY.items():
-#     new_key[object_type] = {
-#         k: v.get_key_name()
-#         for k, v in mappings.items()
-#     }
+new_key_file: str = f"""# Auto generated from object_gen/generator.py using object_gen/key.py
 
-# pprint(DeepDiff(OLD_KEY, new_key))
+KEY = {new_key}"""
+
+with open(PATH_KEY, "w") as f:
+    f.write(new_key_file)
+
+print("    Done!")
