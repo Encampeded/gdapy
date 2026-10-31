@@ -20,6 +20,7 @@
 
 
 **For the Future:**
+- I actually don't love that we two key.py files. What would be the best way to just use one?
 - asyncio support
   - **__very important__**, but I really want it to be optional
   - unasync is an option, but seems wacky

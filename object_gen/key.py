@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 from typing import Any, get_args
 
 from attrs import define, field
@@ -33,7 +34,7 @@ class Field:
         return (
             self.name
             if "alias" not in self.field_values
-            else lower_camel(self.field_values["alias"].replace("_id", "_ID"))
+            else re.sub(r"Id$", "ID", lower_camel(self.field_values["alias"]))
         )
 
 
@@ -238,4 +239,16 @@ KEY: dict[str, dict[str, Field]] = {
         "63": F("unknown63", str),
         "67": F("unknown67", str),
     },
+
+    # Only used for to_dict key
+    "MapPack": {
+        "1": F("packID", int),
+        "2": F("packName", str),
+        "3": F("levels", list[int]),
+        "4": F("stars", int),
+        "5": F("coins", int),
+        "6": F("difficulty", "MapPackDifficulty"),
+        "7": F("textColor", list[int]),
+        "8": F("barColor", list[int]),
+    }
 }

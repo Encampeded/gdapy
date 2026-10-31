@@ -1,6 +1,6 @@
 from attrs import define, field
 
-from ...enums import GauntletID
+from ...enums import GauntletID, MapPackDifficulty
 from .gd_object import GDObject
 
 
@@ -32,6 +32,6 @@ class BeatenMapPack(BaseMapPack):
 @define
 class MapPack(BeatenMapPack):
     pack_name: str
-    difficulty: str
+    difficulty: MapPackDifficulty
     text_color: list[int]
     bar_color: list[int]
