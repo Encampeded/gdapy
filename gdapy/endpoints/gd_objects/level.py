@@ -1,4 +1,4 @@
-from base64 import b64decode, urlsafe_b64decode
+from base64 import urlsafe_b64decode
 from datetime import datetime
 from typing import TYPE_CHECKING
 from zlib import decompress
@@ -13,7 +13,7 @@ from ...enums.levels import (
     OfficialSong,
 )
 from ...enums.misc import XORKeys
-from ...utils import gd_xor_cipher
+from ...utils import gd_xor_cipher, gdb64_decode
 from .gd_object import GDObject
 from .gd_types import B64String
 
@@ -165,18 +165,14 @@ class DownloadLevel(Level):
         ).decode()
 
         # Decode password
-        if raw_dict["password"] == "0":
-            raw_dict["password"] = 0
-
-        else:
-            # Password decoding code adapted from GDDocs and George https://stackoverflow.com/a/20558041
-            # decode the password from base64
-
-            decoded_b64 = b64decode(
-                raw_dict["password"].encode()
-            ).decode()  # TODO: This feels familiar...
-            password = gd_xor_cipher(decoded_b64, XORKeys.LEVEL_PASSWORD)
-
-            raw_dict["password"] = int(password)
+        raw_dict["password"] = int(
+            0
+            if raw_dict["password"] == "0"
+            else (
+                gd_xor_cipher(
+                    gdb64_decode(raw_dict["password"]), XORKeys.LEVEL_PASSWORD
+                )
+            )
+        )
 
         return super()._clean(raw_dict)

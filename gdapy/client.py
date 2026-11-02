@@ -13,7 +13,7 @@ from .endpoints import (
 )
 from .enums import Platform, Secrets
 from .errors import GDServerError, NotLoggedInError
-from .utils import is_integer
+from .utils import gdb64_decode, is_integer
 
 # userID and accountID
 # NOT playerID. playerID is FAKE PROPAGANDA made up by GDDocs!!!!1!1 (and colon's gd-docs ngl i think)

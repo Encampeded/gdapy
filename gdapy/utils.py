@@ -1,10 +1,14 @@
-from base64 import urlsafe_b64encode
+from base64 import urlsafe_b64decode, urlsafe_b64encode
 from collections.abc import Iterable
 from hashlib import sha1
 from itertools import batched
 
 from .enums import Salts, XORKeys
 from .key import KEY
+
+
+def gdb64_decode(encoded_string: str) -> str:
+    return urlsafe_b64decode(encoded_string.encode()).decode()
 
 
 def to_dictionary(type: str, raw_data: str, delimiter: str = ":") -> dict[str, str]:

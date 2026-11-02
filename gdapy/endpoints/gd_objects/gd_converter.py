@@ -7,6 +7,7 @@ from typing import Any, get_args, get_origin
 from cattrs import Converter
 
 from ...enums import GDEnum
+from ...utils import gdb64_decode
 from .gd_types import B64String
 
 gd_converter = Converter(forbid_extra_keys=True, use_alias=True)
@@ -55,7 +56,7 @@ def gd_list_unstructure_hook(value: list) -> str:
 
 @gd_converter.register_structure_hook
 def b64_string_structure_decode_hook(value: str, _) -> B64String:
-    return B64String(urlsafe_b64decode(value.encode()).decode())
+    return B64String(gdb64_decode(value))
 
 
 @gd_converter.register_structure_hook
