@@ -96,9 +96,10 @@ class LevelsEndpoints:
         if raw_data[4]:
             # Songs' use "~|~" as their delimeter, and can end with `~|` or start with `|~`
             # So we just remove the tildes for simplicity, though: TODO: does this break song names with tildes?
+            # Yes, yes it does. It breaks for song names with colons. Fuck.
+
             songs = [
-                LevelSong.from_string(song, "|")
-                for song in raw_data[4].replace("~", "").split(":")
+                LevelSong.from_string(song, "~|~") for song in raw_data[4].split("~:~")
             ]
 
         # user is only returned if the level is daily/weekly/event

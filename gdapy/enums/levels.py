@@ -5,6 +5,7 @@ from .gd_enum import GDEnum
 # Endpoint Argument Enums
 # Used by endpoint/levels.py
 
+
 class SearchType(IntEnum):
     SEARCH = 0
     MOST_DOWNLOADED = 1
@@ -29,7 +30,9 @@ class SearchType(IntEnum):
     EVENT_HISTORY = 23
     # REPORTED_LEVELS = 24 # Elder mods only
     LIST = 25  # str is listID
-    LIST_OF_LEVELS = 26 # same as type 19 (unknown list of levels) but can return up to 100 levels
+    LIST_OF_LEVELS = (
+        26  # same as type 19 (unknown list of levels) but can return up to 100 levels
+    )
     # SENT_2 = 27 # TODO FIXME: GDDocs just calls this Sent
     GD_LITE_WEEKLY_LEVELS = 28
     GD_LITE_BONUS_LEVELS = 29
@@ -43,6 +46,7 @@ class DailyType(IntEnum):
 
 # Endpoint enums
 # Used by endpoints/endpoint_objects/levels.py
+
 
 class Rating(StrEnum):
     UNRATED = "noStar"
@@ -71,14 +75,17 @@ class Difficulty(IntEnum):
     INSANE_DEMON = 9
     EXTREME_DEMON = 10
 
+
 # Used by SearchFilterss
 class DemonDifficulty(IntEnum):
     """SearchFilters DemonDifficulty filter"""
+
     EASY = 1
     MEDIUM = 2
     HARD = 3
     INSANE = 4
     EXTREME = 5
+
 
 # Field enums
 # Used by endpoints/gd_objects/levels.py
@@ -96,6 +103,7 @@ class DifficultyNumerator(GDEnum):
     HARDER = 40
     INSANE = 50
 
+
 class LevelDemonDifficulty(GDEnum):
     EASY_DEMON = 3
     MEDIUM_DEMON = 4
@@ -111,6 +119,7 @@ class LevelLength(GDEnum):
     LONG = 3
     XL = 4
     PLATFORMER = 5
+
 
 class EpicRating(GDEnum):
     NONE = 0

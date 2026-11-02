@@ -1,4 +1,3 @@
-from base64 import urlsafe_b64decode
 from collections.abc import Callable
 from datetime import datetime
 from types import NoneType, UnionType

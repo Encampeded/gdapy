@@ -36,7 +36,7 @@ class Level(GDObject):
         auto: bool
         demon: bool
         demon_difficulty: LevelDemonDifficulty
-        difficulty_numerator: LevelDifficulty
+        difficulty_numerator: DifficultyNumerator
         stars: int
         feature_score: int
         epic: EpicRating
@@ -81,8 +81,8 @@ class Level(GDObject):
 @define
 class SearchLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    id: int = field(alias='level_id')
-    name: str = field(alias='level_name')
+    id: int = field(alias="level_id")
+    name: str = field(alias="level_name")
     description: B64String
     version: int
     user_id: int
@@ -114,8 +114,8 @@ class SearchLevel(Level):
 @define
 class DownloadLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    id: int = field(alias='level_id')
-    name: str = field(alias='level_name')
+    id: int = field(alias="level_id")
+    name: str = field(alias="level_name")
     description: B64String
     level_string: str = field(repr=lambda s: "'" + s[:64] + "...'")
     version: int

@@ -1,5 +1,5 @@
-from datetime import datetime
 import re
+from datetime import datetime
 from typing import Any, get_args
 
 from attrs import define, field
@@ -37,10 +37,8 @@ class Field:
             else re.sub(r"Id$", "ID", lower_camel(self.field_values["alias"]))
         )
 
-
     def type_to_str(self) -> str:
         return type_to_str_rec(self.type)
-
 
     def to_line(self) -> str:
 
@@ -120,8 +118,8 @@ KEY: dict[str, dict[str, Field]] = {
     "Level": {
         "1": F("id", int, {"alias": "level_id"}),
         "2": F("name", str, {"alias": "level_name"}),
-        "3": F("description", "B64String"), # This is abominable
-        "4": F("levelString", str, {"repr": "lambda s: \"\'\" + s[:64] + \"...\'\""}),
+        "3": F("description", "B64String"),  # This is abominable
+        "4": F("levelString", str, {"repr": 'lambda s: "\'" + s[:64] + "...\'"'}),
         "5": F("version", int),
         "6": F("userID", int),
         "7": F("difficulty", int),
@@ -239,7 +237,6 @@ KEY: dict[str, dict[str, Field]] = {
         "63": F("unknown63", str),
         "67": F("unknown67", str),
     },
-
     # Only used for to_dict key
     "MapPack": {
         "1": F("packID", int),
@@ -250,5 +247,5 @@ KEY: dict[str, dict[str, Field]] = {
         "6": F("difficulty", "MapPackDifficulty"),
         "7": F("textColor", list[int]),
         "8": F("barColor", list[int]),
-    }
+    },
 }
