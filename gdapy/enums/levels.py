@@ -87,7 +87,8 @@ class DemonDifficulty(IntEnum):
 # ✨✨✨✨✨✨✨
 # alas, said world is unrealistic and impossible :(
 
-class LevelDifficulty(GDEnum):
+
+class DifficultyNumerator(GDEnum):
     UNRATED = 0
     EASY = 10
     NORMAL = 20

@@ -6,9 +6,9 @@ from zlib import decompress
 from attrs import define, field
 
 from ...enums.levels import (
+    DifficultyNumerator,
     EpicRating,
     LevelDemonDifficulty,
-    LevelDifficulty,
     LevelLength,
     OfficialSong,
 )
