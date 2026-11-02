@@ -88,22 +88,24 @@ Wow, I'm flattered. The following sections specify general code-stuffs for the l
 
 `gdapy/endpoints`
 - Contains endpoint classes used by client.py
-- Should contain the implementation; the user shouldn't import anything from this folder.
+- Should generally contain the implementation; the user shouldn't import anything from this folder*
+  - *Save for complex endpoint parameters. See SearchFilters.
 - Endpoint methods should copy the actual php endpoint names, however with "GJ" and any numbers removed, and in snake_case.
 
 `gdapy/endpoints/gd_objects`
-- Contains `gd_object` implementations
-  - Objects should inherit from a base Object class (ex Song, Level, etc) `gd_object` that defines the object_type ClassVar
-    - If any attributes require cleanup (mainly just decoding a specially encoded string), implement a `_clean()` method (which should call `super()._clean()` at the end!)
-    - 
-  - Object fields are defined in `object_gen/objects.py`; **they should not be manually edited**.
-  - If you want a convenience field (ex difficulty: str, instead of difficulty denominator/numerator), implement them as a property.
+- Contains gd_objects (Level, User, etc.)
+- Most object fields are defined in `object_gen/objects.py`
+  - If you see `## BEGIN AUTO GENERATED FIELDS`, **do not edit fields manually**.
+  - The exceptions are smaller classes, like MapPack
+- Objects should inherit from a base Object class (ex Song, Level, etc) `gd_object` that defines the object_type ClassVar
+  - If any attributes require cleanup (mainly just decoding a specially encoded string), implement a `_clean()` method (which should call `super()._clean()` at the end!)
+- If you want a convenience field (ex difficulty: str, instead of difficulty denominator/numerator), implement them as a property.
 
 `gdapy/endpoints/endpoint_objects`
 - Contains structured response objects returned by endpoint methods
 
-`object_gen`
-- Contains code for generating gd_objects from lists of int keys
+`code_gen`
+- Contains code for generating gd_objects and `gdapy/key.py` from `key.py` and `objects.py`
 
 ### General Style
 - I use ruff to format files. Would recommend.
