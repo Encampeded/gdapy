@@ -105,6 +105,15 @@ class GDClient:
         if is_integer(response_text) and response_text.startswith("-"):
             raise GDServerError(int(response_text))
 
+        if response_text.startswith("##P##"):
+            error_message: list[str] = response_text.split("##P##")
+
+            title: str = gdb64_decode(error_message[0].split(":")[0][2:])
+            description: str = gdb64_decode(error_message[0].split(":")[1][2:])
+            error_code: int = int(error_message[1])
+
+            raise GDServerError(error_code, f"{title}: {description}")
+
         return response_text
 
     def check_logged_in(self):
