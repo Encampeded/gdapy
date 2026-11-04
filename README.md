@@ -11,55 +11,101 @@ Huge thanks to the [gd-docs](boomlings.dev) project for providing the documentat
 
 ```py
 >>> from gdapy import GDClient
+>>> import rich # for pretty printing
 >>>
 >>> client = GDClient()
 >>>
->>> response = client.levels.get_levels(query = "ReTraY")
->>> for level in response.levels:
-...     print(level.name, '-' level.rating)
+>>> search_results = client.levels.get_levels(query="loco motive")
+>>> search_results.page_info
+PageInfo(1 to 10 of 9999)
+>>>
+>>> for level in search_results.levels:
+...     print(level.name, '-', level.id)
 ...
-ReTraY - Featured
-ReTraY 2018 - Unrated
-Retray 2019 - Featured
-ReTrAy Bird - Unrated
-ReTraY Clicks Chal - Unrated
-ReTraY Full Ver - Unrated
-ReTraY 2P - Unrated
-ReTraY 2018 - Unrated
-ReTraY  - Unrated
-Retray V2 - Unrated
->>> retray_search_result = response.levels[0]
->>> # Many objects include convenient properties wrapping otherwise obtuse values.
->>> retray_search_result.difficulty
-'Easy'
->>> retray_search_result.game_version_semantic
-2.1
->>> response = client.levels.download_level(response.levels[0].id)
->>> response
+Loco Motive - 97598449
+Loco Motive meme - 97846910
+loco motive - 93798744
+Loco Motive auto - 97803866
+Loco Motive Practice - 98444782
+Loco Motive bad - 98084107
+Loco Motive 2 - 97990163
+Loco Motive Easy - 97647550
+Loco Motive 2 - 98292665
+Loco Motive but - 97638201
+>>>
+>>> downloaded_response = client.levels.download_level(search_results.levels[0].id)
+>>> rich.print(downloaded_response)
 DownloadLevelResponse(
-level=DownloadLevel(
-        id=6508283,
-        name='ReTraY',
-        description='Thanks for playing Geometry Dash',
-        level_string='kS38,1_0_2_0_3_0_4_-1_6_1000_7_1_15_0_18_0_8_1|1_0_2_0_3_0_4_-1_...',
-        version=3, user_id=4993756, difficulty_denominator=10, difficulty_numerator=10,
-        downloads=137366401, official_song=0, game_version=21, likes=9191479, 
-        length=3, demon=False, stars=2, feature_score=2619, auto=False, password=1532211,
-        upload_date='11 years', update_date='7 years', copied_id=0, two_player=False,
-        custom_song_id=557117, extra_string='0_733_0_0_0_0_574_716_0_0_352_78_729_0_42_0_833_68_0_347_0_38_240_205_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0',
-        coins=3, verified_coins=True, stars_requested=2, low_detail_mode=False, epic=0,
-        demon_difficulty=3, objects=20000, exact_upload_time=datetime.datetime(2015, 4, 15, 9, 47, 35),
-        exact_update_time=datetime.datetime(2019, 7, 7, 12, 46, 52), editor_time=13773,
-        editor_time_copies=None, song_ids=None,  sfx_ids=None, song_size=None, verification_time=0
+    level=DownloadLevel(
+        difficulty='Harder',
+        rating='Epic',
+        game_version_semantic=2.2,
+        id=97598449,
+        name='Loco Motive',
+        description='Yee                                                                      Haw',
+        level_string='kS38,1_255_2_195_3_26_11_255_12_255_13_255_4_-1_6_1000_7_1_15_1_...',
+        version=2,
+        user_id=8599996,
+        difficulty_denominator=10,
+        difficulty_numerator=<DifficultyNumerator.HARDER: 40>,
+        downloads=4498275,
+        official_song=<OfficialSong.STEREO_MADNESS: 0>,
+        game_version=22,
+        likes=190744,
+        length=<LevelLength.PLATFORMER: 5>,
+        demon=False,
+        stars=6,
+        feature_score=33391,
+        auto=False,
+        password=1,
+        upload_date='2 years',
+        update_date='2 years',
+        copied_id=0,
+        two_player=False,
+        custom_song_id=1204676,
+        extra_string='25,328,58,230,76,373,82,980',
+        coins=0,
+        verified_coins=False,
+        stars_requested=6,
+        low_detail_mode=False,
+        epic=<EpicRating.EPIC: 1>,
+        demon_difficulty=<LevelDemonDifficulty.INSANE_DEMON: 5>,
+        objects=18374,
+        exact_upload_time=datetime.datetime(2023, 12, 21, 14, 19, 6),
+        exact_update_time=datetime.datetime(2023, 12, 21, 16, 17),
+        daily_number=None,
+        editor_time=87320,
+        editor_time_copies=0,
+        song_ids=[1204676],
+        sfx_ids=[386, 463, 477, 1202, 1224, 1565, 1750, 2051, 2385, 2559, 2629, 2981, 3081, 3308, 3309, 3310, 3313, 3581, 4083, 4112, 4117, 4118, 4397, 6010, 6044, 6045, 6398, 6405, 6543, 6780, 7379, 9553, 9680, 9681, 13154, 13727, 14059],
+        song_size=8167092,
+        verification_time=19959
     ),
     user=None,
-    songs=[],
+    songs=[
+        LevelSong(
+            id=1204676,
+            name='Hide n Seek Ranch',
+            artist_id=15747,
+            artist_name='PuffballsUnited',
+            size=6.34,
+            video_id='',
+            youtube_url='',
+            is_verified=False,
+            link='https%3A%2F%2Faudio.ngfiles.com%2F1204000%2F1204676_Hide-n-Seek-Ranch.mp3%3Ff1680307735',
+            download_soundtrack_override='',
+            nong_enum=None,
+            extra_artist_ids=None,
+            new=None,
+            artist_links=None
+        )
+    ],
     extra_artist_names=[],
-    extra_data='1000;3;#0;#'
+    extra_data='0;2;H4sIAAAAAAAAA91ZWbLlNgjdkD-EAA2VrWXxYZB1LcTbQKor3XWPEWI4DHbq...'
 )
->>> # Above manually wrapped for your viewing convenience.
+>>>
 >>> account_id = client.accounts.log_in("Encamped", "***********")
->>> comment_id = client.comments.upload_comment("I love ReTraY!", response.level.id)
+>>> comment_id = client.comments.upload_comment("I love this level!", downloaded_response.level.id)
 >>> # Nevermind...
 >>> client.comments.delete_comment(comment_id, retray.level.id)
 >>> client.accounts.log_out()
@@ -95,11 +141,11 @@ Wow, I'm flattered. The following sections specify general code-stuffs for the l
 `gdapy/endpoints/gd_objects`
 - Contains gd_objects (Level, User, etc.)
 - Most object fields are defined in `object_gen/objects.py`
-  - If you see `## BEGIN AUTO GENERATED FIELDS`, **do not edit fields manually**.
-  - The exceptions are smaller classes, like MapPack
+  - If you see `## BEGIN AUTO GENERATED FIELDS`, **do not edit the fields manually**.
+  - Smaller classes, like MapPack, can be implemented manually
 - Objects should inherit from a base Object class (ex Song, Level, etc) `gd_object` that defines the object_type ClassVar
   - If any attributes require cleanup (mainly just decoding a specially encoded string), implement a `_clean()` method (which should call `super()._clean()` at the end!)
-- If you want a convenience field (ex difficulty: str, instead of difficulty denominator/numerator), implement them as a property.
+- If you want a convenience field (ex difficulty: str, instead of difficulty denominator/numerator), set them as `field(init=False)` and set them in `__post_init__`
 
 `gdapy/endpoints/endpoint_objects`
 - Contains structured response objects returned by endpoint methods
