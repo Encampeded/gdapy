@@ -27,7 +27,7 @@ class DownloadLevelResponse:
     user: TinyUser | None
     songs: list[LevelSong]
     extra_artist_names: list[tuple[int, str]]
-    extra_data: str
+    extra_data: str = field(repr=lambda s : repr(s[:64] + '...'))
 
 
 @define

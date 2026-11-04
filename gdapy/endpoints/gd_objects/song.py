@@ -36,10 +36,10 @@ class LevelSong(Song):
     youtube_url: str
     is_verified: bool
     link: str
+    download_soundtrack_override: str
     nong_enum: int | None = None
     extra_artist_ids: list[int] | None = None
     new: bool | None = None
-    download_soundtrack_override: str | None = None
     artist_links: str | None = None
     ## END AUTO GENERATED FIELDS
 

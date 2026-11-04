@@ -41,48 +41,43 @@ class Level(GDObject):
         feature_score: int
         epic: EpicRating
         official_song: OfficialSong
+        game_version: int
 
-    @property
-    def difficulty(self) -> str:
+
+    difficulty: str = field(init=False)
+    rating: str = field(init=False)
+    game_version_semantic: float = field(init=False)
+
+    def __attrs_post_init__(self):
+        # Set difficulty
         if self.auto:
-            return "Auto"
+            self.difficulty = "Auto"
+        elif self.demon:
+            self.difficulty = str(self.demon_difficulty)
+        else:
+            self.difficulty = str(self.difficulty_numerator)
 
-        if self.demon:
-            return str(self.demon_difficulty)
-
-        return str(self.difficulty_numerator)
-
-    @property
-    def rating(self) -> str:
+        # Set stars
         if not self.stars:
-            return "Unrated"
-
+            self.rating = "Unrated"
         elif not self.feature_score:
-            return "Star Rated"
+            self.rating = "Star Rated"
+        else:
+            self.rating = str(self.epic)
 
-        return str(self.epic)
-
-    @property
-    def game_version_semantic(self) -> float:
-        game_version = int(self.raw_dict["gameVersion"])
-        if int(game_version) <= 7:
-            return float(f"1.{game_version - 1}")
-
-        elif int(game_version) == 10:
-            return 1.7
-
-        return game_version / 10
-
-    @property
-    def official_song_name(self) -> str:
-        return str(self.official_song)
-
+        # Set game_version_semantic
+        if self.game_version <= 7:
+            self.game_version_semantic = float(f"1.{self.game_version - 1}")
+        elif self.game_version == 10:
+            self.game_version_semantic = 1.7
+        else:
+            self.game_version_semantic = self.game_version / 10
 
 @define
 class SearchLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    id: int = field(alias="level_id")
-    name: str = field(alias="level_name")
+    id: int = field(alias='level_id')
+    name: str = field(alias='level_name')
     description: B64String
     version: int
     user_id: int
@@ -114,8 +109,8 @@ class SearchLevel(Level):
 @define
 class DownloadLevel(Level):
     ## BEGIN AUTO GENERATED FIELDS
-    id: int = field(alias="level_id")
-    name: str = field(alias="level_name")
+    id: int = field(alias='level_id')
+    name: str = field(alias='level_name')
     description: B64String
     level_string: str = field(repr=lambda s: "'" + s[:64] + "...'")
     version: int
