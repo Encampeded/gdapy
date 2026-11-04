@@ -4,5 +4,5 @@ from pyheck import title
 
 
 class GDEnum(Enum):
-    def __repr__(self):
+    def __str__(self):
         return title(self.name)
