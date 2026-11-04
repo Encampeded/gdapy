@@ -1,4 +1,6 @@
-from typing import TYPE_CHECKING, Literal
+from base64 import urlsafe_b64decode
+from typing import TYPE_CHECKING, Any, Literal
+from zlib import decompress
 
 from .. import utils
 from ..enums import DailyType, SearchType
@@ -107,14 +109,39 @@ class LevelsEndpoints:
             raw_user = raw_data[3]
             user = TinyUser.from_string(raw_user)
 
-        if raw_data[5]:
-            input(raw_data[1:])
+        death_data_list: Any = raw_data[6].split(";")
+        death_data_list[2] = (
+            decompress(urlsafe_b64decode(death_data_list[2].encode()), 15 | 32)
+            .decode()
+            .split("|")
+        )
+
+        death_data_list[0] = int(death_data_list[0])
+        death_data_list[1] = int(death_data_list[1])
+
+        death_data_list[2][0] = [
+            tuple(map(int, marker.split(",")))
+            for marker in death_data_list[2][0].split(";")
+        ]
+        death_data_list[2][1] = tuple(map(int, death_data_list[2][1].split(",")))
+
+        death_data_list[2] = tuple(death_data_list[2])
+
+        death_data: tuple[
+            int,
+            int,
+            tuple[
+                list[tuple[int, int, int, int, int, int, int, int, int]],
+                tuple[int, ...],
+            ],
+        ] = tuple(death_data_list)
 
         return DownloadLevelResponse(
             level=level,
             user=user,
             songs=songs,
             extra_artist_names=extra_artist_names,
+            death_data=death_data,
             extra_data="#".join(raw_data[6:]),
         )
 

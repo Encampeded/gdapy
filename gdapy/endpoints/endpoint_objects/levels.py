@@ -27,6 +27,7 @@ class DownloadLevelResponse:
     user: TinyUser | None
     songs: list[LevelSong]
     extra_artist_names: list[tuple[int, str]]
+    death_data: tuple[int, int, tuple[list[tuple[int, int, int, int, int, int, int, int, int]], tuple[int, ...]]]
     extra_data: str = field(repr=lambda s : repr(s[:64] + '...'))
 
 
