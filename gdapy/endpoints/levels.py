@@ -6,8 +6,11 @@ from .. import utils
 from ..enums import DailyType, SearchType
 from ..errors import NotImplementedModEndpointError
 from .endpoint_objects import (
+    DeathData,
+    DeathMarker,
     DownloadLevelResponse,
     GetLevelsResponse,
+    GlobalProgress,
     Page,
     PageInfo,
     SearchFilters,
@@ -109,32 +112,26 @@ class LevelsEndpoints:
             raw_user = raw_data[3]
             user = TinyUser.from_string(raw_user)
 
-        death_data_list: Any = raw_data[6].split(";")
-        death_data_list[2] = (
-            decompress(urlsafe_b64decode(death_data_list[2].encode()), 15 | 32)
+        raw_death_data: list = raw_data[6].split(";")
+        raw_death_data[2] = (
+            decompress(urlsafe_b64decode(raw_death_data[2].encode()), 15 | 32)
             .decode()
             .split("|")
         )
 
-        death_data_list[0] = int(death_data_list[0])
-        death_data_list[1] = int(death_data_list[1])
-
-        death_data_list[2][0] = [
-            tuple(map(int, marker.split(",")))
-            for marker in death_data_list[2][0].split(";")
+        death_markers: list[DeathMarker] = [
+            DeathMarker(raw_death_marker)
+            for raw_death_marker in raw_death_data[2][0].split(";")
         ]
-        death_data_list[2][1] = tuple(map(int, death_data_list[2][1].split(",")))
 
-        death_data_list[2] = tuple(death_data_list[2])
+        global_progress: GlobalProgress = GlobalProgress(raw_death_data[2][1])
 
-        death_data: tuple[
-            int,
-            int,
-            tuple[
-                list[tuple[int, int, int, int, int, int, int, int, int]],
-                tuple[int, ...],
-            ],
-        ] = tuple(death_data_list)
+        death_data: DeathData = DeathData(
+            unknown1=int(raw_death_data[0]),
+            unknown2=int(raw_death_data[1]),
+            death_markers=death_markers,
+            global_progress=global_progress
+        )
 
         return DownloadLevelResponse(
             level=level,
@@ -142,7 +139,7 @@ class LevelsEndpoints:
             songs=songs,
             extra_artist_names=extra_artist_names,
             death_data=death_data,
-            extra_data="#".join(raw_data[6:]),
+            extra_data="#".join(raw_data[7:]),
         )
 
     def get_daily_level(self, type: int | DailyType = 0) -> tuple[int, int]:

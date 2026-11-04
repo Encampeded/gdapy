@@ -7,6 +7,60 @@ from .page import PageInfo
 
 
 @define
+class DeathMarker:
+    x: int
+    y: int
+    deaths: int
+    death_percentage: float
+    wall_percentage: float
+    unknown: int
+    stars: int
+    death_percentage_border: int
+    wall_percentage_border: int
+
+    def __init__(self, raw_death_marker):
+        death_marker = [int(i) for i in raw_death_marker.split(",")]
+
+        self.x = death_marker[0]
+        self.y = death_marker[1]
+        self.deaths = death_marker[2]
+        self.death_percentage = death_marker[3] / 10
+        self.wall_percentage = death_marker[4] / 10
+        self.unknown = death_marker[5]
+        self.stars = death_marker[6]
+        self.death_percentage_border = death_marker[7]
+        self.wall_percentage_border = death_marker[8]
+
+
+@define
+class GlobalProgress:
+    runs: int
+    completions: int
+    _progress: tuple[int, ...] = field(repr=False)
+
+    def __init__(self, raw_global_progress: str) -> None:
+        global_progress = [int(i) for i in raw_global_progress.split(",")]
+
+        self._progress = tuple(global_progress[:100])
+        self.runs = global_progress[101]
+        self.completions = global_progress[102]
+
+    def __getitem__(self, index: int) -> int:
+        if not (0 <= index <= 100):
+            raise ValueError()
+
+        return self._progress[index]
+
+
+@define
+class DeathData:
+    unknown1: int
+    unknown2: int
+    death_markers: list[DeathMarker]
+    global_progress: GlobalProgress
+
+
+@define
 class DownloadLevelResponse:
     """Represents a response from downloadGJLevel22.php
 
@@ -27,8 +81,8 @@ class DownloadLevelResponse:
     user: TinyUser | None
     songs: list[LevelSong]
     extra_artist_names: list[tuple[int, str]]
-    death_data: tuple[int, int, tuple[list[tuple[int, int, int, int, int, int, int, int, int]], tuple[int, ...]]]
-    extra_data: str = field(repr=lambda s : repr(s[:64] + '...'))
+    death_data: DeathData
+    extra_data: str
 
 
 @define
