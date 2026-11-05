@@ -1,9 +1,10 @@
+import random
 from base64 import urlsafe_b64decode
-from typing import TYPE_CHECKING, Any, Literal
+from typing import TYPE_CHECKING, Literal
 from zlib import decompress
 
 from .. import utils
-from ..enums import DailyType, SearchType
+from ..enums import DailyType, SearchType, XORKeys
 from ..errors import NotImplementedModEndpointError
 from .endpoint_objects import (
     DeathData,
@@ -130,7 +131,7 @@ class LevelsEndpoints:
             unknown1=int(raw_death_data[0]),
             unknown2=int(raw_death_data[1]),
             death_markers=death_markers,
-            global_progress=global_progress
+            global_progress=global_progress,
         )
 
         return DownloadLevelResponse(
@@ -151,11 +152,28 @@ class LevelsEndpoints:
         Returns:
             Tuple in the following format (index, time_left)
         """
-        response = self.client.gd_post("getGJDailyLevel", {"type": type})
+        data: dict[str, str | int] = {"type": type}
 
-        index, time_left = map(int, response.split("|"))
+        if type == DailyType.EVENT:
+            data["chk"] = utils.generate_rewards_chk(
+                self.client.saved_data.get("userID", random.randint(10000, 1000000)),  # type: ignore
+                XORKeys.CHEST_REWARDS,
+            )
+
+        response = self.client.gd_post("getGJDailyLevel", data=data)
+
+        raw_data = response.split("|")
+
+        index = int(raw_data[0])
+        time_left = int(raw_data[1])
 
         return (index, time_left)
+
+        # ['200029', '10', 'SdJcFUEN1eWEPDgEPAgYJCwACDwoLAB4GCR0JBxkIHQkDGQo=', 'a2dd9d03eaa3bd5854d7db49beece9e9d61bebb5']
+        # TODO: How do we decode this rewards stuff...?
+        #
+        # if type != DailyType.EVENT:
+        #     return (index, time_left)
 
     def get_gauntlets(self) -> list[Gauntlet]:
         response = self.client.gd_post("getGJGauntlets21", {"special": 1})
@@ -185,6 +203,19 @@ class LevelsEndpoints:
         gdw: bool = False,
         raw_params: dict | None = None,
     ) -> GetLevelsResponse:
+        """Searches for levels.
+
+        Arguments:
+            search_type (SearchType): The type of search query (defaults to search)
+            query (str | int): The search query
+            page (int): Defaults to 0
+            filters (SearchFilters)
+            gdw (bool): If the request is from GD World (defaults to False)
+            raw_params (dict): Any other raw parameters in the request body
+
+        Returns:
+            GetLevelsResponse
+        """
 
         parameters: dict[str, str | int] = {
             "type": search_type.value,

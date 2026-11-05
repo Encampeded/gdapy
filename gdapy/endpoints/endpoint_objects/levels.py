@@ -90,8 +90,10 @@ class GetLevelsResponse:
     """Represents a response from getGJLevels21.php
 
     Attributes:
-
-
+        levels (list[SearchLevel])
+        creators (list[TinyUser])
+        songs (list[LevelSong])
+        page_info (PageInfo)
     """
 
     levels: list[SearchLevel]
