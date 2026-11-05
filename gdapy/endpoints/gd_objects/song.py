@@ -1,6 +1,7 @@
 from attrs import define
 
 from .gd_object import GDObject
+from .gd_types import QuotedLink
 
 
 class Song(GDObject):
@@ -35,7 +36,7 @@ class LevelSong(Song):
     video_id: str
     youtube_url: str
     is_verified: bool
-    link: str
+    link: QuotedLink
     download_soundtrack_override: str
     nong_enum: int | None = None
     extra_artist_ids: list[int] | None = None
@@ -55,7 +56,7 @@ class DownloadSong(Song):
     video_id: str
     youtube_url: str
     is_verified: bool
-    link: str
+    link: QuotedLink
     download_soundtrack_override: str
     nong_enum: int | None = None
     extra_artist_ids: list[int] | None = None

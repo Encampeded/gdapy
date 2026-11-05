@@ -2,14 +2,20 @@ from collections.abc import Callable
 from datetime import datetime
 from types import NoneType, UnionType
 from typing import Any, get_args, get_origin
+from urllib.parse import unquote
 
 from cattrs import Converter
 
 from ...enums import GDEnum
 from ...utils import gdb64_decode
-from .gd_types import B64String
+from .gd_types import B64String, QuotedLink
 
 gd_converter = Converter(forbid_extra_keys=True, use_alias=True)
+
+
+@gd_converter.register_structure_hook
+def link_structure_hook(value: str, t: Any) -> QuotedLink:
+    return QuotedLink(unquote(value))
 
 
 @gd_converter.register_structure_hook

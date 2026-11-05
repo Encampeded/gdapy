@@ -90,7 +90,7 @@ KEY: dict[str, dict[str, Field]] = {
         "7": F("youtubeURL", str),
         "8": F("isVerified", bool),
         "9": F("songPriority", int),
-        "10": F("link", str),
+        "10": F("link", "QuotedLink"),
         "11": F("nongEnum", int),
         "12": F("extraArtistIDs", list[int]),
         "13": F("new", bool),
