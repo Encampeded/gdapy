@@ -81,9 +81,12 @@ class AccountsEndpoints:
 
         account_id, user_id = response
 
-        self.client.saved_data.update(
-            {"userName": username.lower(), "uuid": account_id, "udid": udid}
-        )
+        self.client.saved_data |= {
+            "userName": username.lower(),
+            "uuid": account_id,
+            "udid": udid,
+            "userID": user_id
+        }
 
         self.client.common_data.update(
             {
