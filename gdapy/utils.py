@@ -1,3 +1,5 @@
+import random
+import string
 from base64 import urlsafe_b64decode, urlsafe_b64encode
 from collections.abc import Iterable
 from hashlib import sha1
@@ -48,6 +50,18 @@ def gd_xor_cipher(input: str, key: XORKeys) -> str:
 
 def gd_sha1(hash_string: str, salt: str = ""):
     return sha1((hash_string + salt).encode()).hexdigest()
+
+def generate_rewards_chk(user_id: int, xor_key: XORKeys):
+    m_chk = int((user_id / 10000.0) + random.randint(0, 1000000))
+    chk_string: str = gd_xor_cipher(str(m_chk), xor_key)
+    encoded_chk: str = urlsafe_b64encode(chk_string.encode()).decode()
+    random_string = "".join(random.choices(string.ascii_letters + string.digits, k=5))
+    return random_string + encoded_chk
+    # this->m_chk = static_cast<int>(this->m_playerUserID/10000.0f + rand()/RAND_MAX * 1000000.0f);
+    # auto chkString = std::format("{}", GameManager::sharedState()->m_chk);
+    # auto encodedChk = cocos2d::ZipUtils::base64EncodeEnc(chkString, "19847");
+    # // gen_random(n) returns a random string of length n using the alphabet [a-zA-Z0-9]
+    # auto chkParam = std::format("chk={}{}", gen_random(5), encodedChk);
 
 
 def generate_chk(values: Iterable, key: XORKeys, salt: str = "") -> str:
