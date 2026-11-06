@@ -54,9 +54,13 @@ gd_converter.register_structure_hook_func(
 )
 
 
-@gd_converter.register_unstructure_hook
-def gd_list_unstructure_hook(value: list) -> str:
-    return ",".join(map(str, value))
+def gd_list_unstructure_hook(values: list) -> str:
+    return ",".join(str(gd_converter.unstructure(v)) for v in values)
+
+
+gd_converter.register_unstructure_hook_func(
+    check_func=lambda t: get_origin(t) is list, func=gd_list_unstructure_hook
+)
 
 
 @gd_converter.register_structure_hook
