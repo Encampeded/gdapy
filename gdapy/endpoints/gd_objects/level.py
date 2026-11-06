@@ -49,6 +49,7 @@ class Level(GDObject):
     game_version_semantic: float = field(init=False)
 
     def __attrs_post_init__(self):
+
         # Set difficulty
         if self.auto:
             self.difficulty = "Auto"
@@ -63,7 +64,7 @@ class Level(GDObject):
         elif not self.feature_score:
             self.rating = "Star Rated"
         else:
-            self.rating = str(self.epic)
+            self.rating = str(self.epic) if self.epic.value else "Featured"
 
         # Set game_version_semantic
         if self.game_version <= 7:
