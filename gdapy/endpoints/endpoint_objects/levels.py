@@ -1,8 +1,16 @@
+from typing import ClassVar
+
 from attrs import define, field
 from cattrs.gen import make_dict_unstructure_fn
 
-from ...enums import DemonDifficulty, Difficulty, LevelLength
-from ..gd_objects import DownloadLevel, LevelSong, SearchLevel, TinyUser, gd_converter
+from ...enums import DemonDifficulty, Difficulty, LevelLength, OfficialSong
+from ..gd_objects import (
+    DownloadLevel,
+    LevelSong,
+    SearchLevel,
+    TinyUser,
+    gd_converter,
+)
 from .page import PageInfo
 
 
@@ -104,33 +112,53 @@ class GetLevelsResponse:
 
 @define
 class SearchFilters:
-    difficulties: list[Difficulty] = field(factory=list, alias="diff")
-    demon_difficulty: DemonDifficulty | None = field(default=None, alias="demonFilter")
+    ALIASES: ClassVar[dict[str, str]] = {
+        "difficulties": "diff",
+        "demon_difficulty": "demonFilter",
+        "lengths": "len",
+        "is_rated": "star",
+        "only_uncompleted": "uncompleted",
+        "only_completed": "onlycompleted",
+        "completed_levels": "completedLevels",
+        "is_original": "original",
+        "has_coins": "coins",
+        "is_two_player": "twoPlayer",
+        "song_id": "song",
+        "uses_custom_song": "customSong",
+        "is_unrated": "noStar",
+        "is_featured": "featured",
+        "is_epic": "epic",
+        "is_legendary": "mythic",
+        "is_mythic": "legendary",
+    }
 
-    lengths: list[LevelLength] = field(factory=list, alias="len")
-    is_rated: bool = field(default=False, alias="star")
+    difficulties: list[Difficulty] = field(factory=list)
+    demon_difficulty: DemonDifficulty | None = None
+
+    lengths: list[LevelLength] = field(factory=list)
+    is_rated: bool = False
 
     # Following are in the "Advanced Options" menu in the client
 
-    only_uncompleted: bool = field(default=False, alias="uncompleted")
-    only_completed: bool = field(default=False, alias="onlycompleted")
-    completed_levels: list[int] = field(factory=list, alias="completedLevels")
+    only_uncompleted: bool = False
+    only_completed: bool = False
+    completed_levels: list[int] = field(factory=list)
     # completed_levels is a comma seperated list of your completed levels for the above filters
     # I wonder if we could auto generate them if logged in...
 
-    is_original: bool = field(default=False, alias="original")
-    has_coins: bool = field(default=False, alias="coins")
-    is_two_player: bool = field(default=False, alias="twoPlayer")
+    is_original: bool = False
+    has_coins: bool = False
+    is_two_player: bool = False
 
-    song_id: int | None = field(default=None, alias="song")
-    uses_custom_song: bool = field(default=False, alias="customSong")
+    song_id: OfficialSong | int | None = None
+    uses_custom_song: bool = False
 
     # is_rated isn't for only star_rated levels; that filter just doesn't exist lmao
-    is_unrated: bool = field(default=False, alias="noStar")
-    is_featured: bool = field(default=False, alias="featured")
-    is_epic: bool = field(default=False, alias="epic")
-    is_legendary: bool = field(default=False, alias="mythic")
-    is_mythic: bool = field(default=False, alias="legendary")
+    is_unrated: bool = False
+    is_featured: bool = False
+    is_epic: bool = False
+    is_legendary: bool = False
+    is_mythic: bool = False
 
     validate_filters: bool = True
 
@@ -138,7 +166,10 @@ class SearchFilters:
         if self.validate_filters:
             self.validate()
 
-        return gd_converter.unstructure(self)
+        return {
+            self.ALIASES[key]: value
+            for key, value in gd_converter.unstructure(self).items()
+        }
 
     def validate(self):
 
@@ -149,9 +180,11 @@ class SearchFilters:
                 "Difficulties contain more than one exclusive value (N/A, Demon, and Auto)"
             )
 
-        if self.uses_custom_song and not self.song_id:
-            raise ValueError()
+        if self.uses_custom_song and isinstance(self.song_id, OfficialSong):
+            raise ValueError("SongID is an OfficialSong when searching for custom songs!")
 
+        if self.demon_difficulty and not self.difficulties:
+            self.difficulties.append(Difficulty.DEMON)
 
 gd_converter.register_unstructure_hook(
     SearchFilters,

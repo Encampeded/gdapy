@@ -1,13 +1,10 @@
 **Features to Impement:**
-- Unify KEYs, and (maybe?) make dictionary keys ints instead of strings
-  - Have generator also update KEY.py based on object_gen's key.py
+- Maybe make dictionary keys ints instead of strings?
 - Logging:
   - warn on unknown keys (name UNKNOWNKEY_32) instead of raising an error
   - warn on extra fields
-- Would be nice if properties could be included in gd_objects repr
-- SearchType: aliases only on unstructure
 - Use GDTuple for lists of set numbers of values (ex RGB values)
-
+- It would be nice if common_data/saved_data were objects instead of dicts
 
 **General Chores:**
 - GDObject.from_string() logic should probably be moved to gd_converter hooks

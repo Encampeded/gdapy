@@ -61,7 +61,7 @@ class Difficulty(IntEnum):
     # NONE = '-'
     NA = -1
     DEMON = -2
-    AUTO = 0
+    AUTO = -3 # 0
 
     EASY = 1
     NORMAL = 2
@@ -96,6 +96,7 @@ class DemonDifficulty(IntEnum):
 
 
 class DifficultyNumerator(GDEnum):
+    AUTO = -10
     UNRATED = 0
     EASY = 10
     NORMAL = 20
