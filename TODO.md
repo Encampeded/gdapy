@@ -1,23 +1,24 @@
 **Features to Impement:**
-- Maybe make dictionary keys ints instead of strings?
+- Add GDArrayObject for 2.209's array-like objects
+- Parse artist_links for Song objects
 - Logging:
   - warn on unknown keys (name UNKNOWNKEY_32) instead of raising an error
   - warn on extra fields
 - Use GDTuple for lists of set numbers of values (ex RGB values)
-- It would be nice if common_data/saved_data were objects instead of dicts
+- Add docstrings for methods missing them
+- Support setting a timezone for datetime.fromtimestamp
 
 **General Chores:**
 - GDObject.from_string() logic should probably be moved to gd_converter hooks
 - List comprehensions for from_string: if input could be empty, add if object, 
   as "".split("|") returns [""] for... reasons.
-- Add docstrings for methods missing them
-- Support setting a timezone for datetime.fromtimestamp
 - objects.py should use tuples instead of lists
-- Parse artist_links for Song objects
-
+- Maybe make dictionary keys ints instead of strings?
+- It would be nice if common_data/saved_data were objects instead of dicts
+- Fix Level enums naming catastrophe
 
 **For the Future:**
-- I actually don't love that we two key.py files. What would be the best way to just use one?
+- I actually don't love that we have two key.py files. What would be the best way to just use one?
 - asyncio support
   - **__very important__**, but I really want it to be optional
   - unasync is an option, but seems wacky
